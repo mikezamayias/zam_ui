@@ -1,0 +1,17 @@
+name: zam_ui_example
+description: Example app for zam_ui presets.
+publish_to: "none"
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.35.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shadcn_ui: ">=0.52.1 <0.55.0"
+  zam_ui:
+    path: ..
+
+flutter:
+  uses-material-design: true
