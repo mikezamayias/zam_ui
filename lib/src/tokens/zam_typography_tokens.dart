@@ -1,12 +1,24 @@
 part of '../tokens.dart';
 
+/// Typography tokens for app-owned font families and text scale values.
+///
+/// `zam_ui` only consumes the [fontFamily] and [monoFontFamily] names. The
+/// consuming app must load or register those fonts itself, usually through the
+/// app's `flutter.fonts` entries in `pubspec.yaml`.
 class ZamTypographyTokens {
   const ZamTypographyTokens({
     required this.fontFamily,
     this.monoFontFamily = 'monospace',
   });
 
+  /// Primary app font family name.
+  ///
+  /// This must match a font family already loaded by the consuming app.
   final String fontFamily;
+
+  /// Monospace app font family name.
+  ///
+  /// This must match a font family already loaded by the consuming app.
   final String monoFontFamily;
 
   double get displaySize => 28;

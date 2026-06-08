@@ -23,7 +23,7 @@ dependencies:
   zam_ui:
     git:
       url: git@github.com:mikezamayias/zam_ui.git
-      ref: v0.1.1
+      ref: v0.1.2
 ```
 
 This package is intentionally marked with `publish_to: "none"` so it cannot be
@@ -58,6 +58,34 @@ ZamTheme(
     routerConfig: router,
   ),
 );
+```
+
+### Fonts
+
+`zam_ui` only consumes font family names through `ZamTypographyTokens`. Each
+app is responsible for loading or registering those fonts before using them,
+usually in the app's own `pubspec.yaml`:
+
+```yaml
+flutter:
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+    - family: JetBrains Mono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Regular.ttf
+```
+
+Then reference the family names from the app preset:
+
+```dart
+typography: const ZamTypographyTokens(
+  fontFamily: 'Inter',
+  monoFontFamily: 'JetBrains Mono',
+),
 ```
 
 ## Verify

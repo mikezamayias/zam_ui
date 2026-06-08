@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2
+
+- Documented that apps must load/register font assets themselves while
+  `zam_ui` only consumes configured font family names.
+
 ## 0.1.1
 
 - Split each class into its own source file across tokens, theme, utilities,
