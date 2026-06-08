@@ -1,0 +1,111 @@
+part of '../theme.dart';
+
+class ZamThemeData {
+  ZamThemeData({
+    required this.colors,
+    required this.typography,
+    required this.icons,
+    this.spacing = const ZamSpacingTokens(),
+    this.radius = const ZamRadiusTokens(),
+    this.strokes = const ZamStrokeTokens(),
+    this.opacities = const ZamOpacityTokens(),
+    this.shadows = const ZamShadowTokens(),
+    this.motion = const ZamMotionTokens(),
+  })  : insets = ZamInsetsTokens(spacing),
+        sizes = ZamSizeTokens(spacing),
+        assert(
+          typography.fontFamily.isNotEmpty,
+          'fontFamily must not be empty.',
+        );
+
+  final ZamColorTokens colors;
+  final ZamTypographyTokens typography;
+  final ZamIconSet icons;
+  final ZamSpacingTokens spacing;
+  final ZamInsetsTokens insets;
+  final ZamSizeTokens sizes;
+  final ZamRadiusTokens radius;
+  final ZamStrokeTokens strokes;
+  final ZamOpacityTokens opacities;
+  final ZamShadowTokens shadows;
+  final ZamMotionTokens motion;
+
+  ShadThemeData toShadThemeData(
+    Brightness brightness, {
+    bool isOled = false,
+  }) {
+    final tone = colors.forBrightness(brightness, isOled: isOled);
+    final primaryForeground = ZamColorUtils.readableOn(colors.primary);
+    final secondary = ZamColorUtils.mix(
+      colors.primary,
+      brightness == Brightness.dark ? colors.black : colors.white,
+      brightness == Brightness.dark ? 0.7 : 0.85,
+    );
+    final destructiveForeground = ZamColorUtils.readableOn(tone.destructive);
+
+    return ShadThemeData(
+      brightness: brightness,
+      radius: radius.lg,
+      textTheme: typography.toShadTextTheme(),
+      colorScheme: ShadColorScheme(
+        background: tone.background,
+        foreground: tone.foreground,
+        card: tone.card,
+        cardForeground: tone.foreground,
+        popover: tone.card,
+        popoverForeground: tone.foreground,
+        primary: colors.primary,
+        primaryForeground: primaryForeground,
+        secondary: secondary,
+        secondaryForeground: ZamColorUtils.readableOn(secondary),
+        muted: tone.muted,
+        mutedForeground: tone.mutedForeground,
+        accent: colors.primary,
+        accentForeground: primaryForeground,
+        destructive: tone.destructive,
+        destructiveForeground: destructiveForeground,
+        border: tone.border,
+        input: tone.input,
+        ring: colors.primary,
+        selection: colors.primary.withValues(alpha: opacities.faint),
+      ),
+    );
+  }
+
+  ZamToastStyle toastStyle(Brightness brightness, ZamToastVariant variant) {
+    final shadTheme = toShadThemeData(brightness);
+    final scheme = shadTheme.colorScheme;
+    final baseColor = switch (variant) {
+      ZamToastVariant.success => scheme.accent,
+      ZamToastVariant.error => scheme.destructive,
+      ZamToastVariant.info => scheme.primary,
+      ZamToastVariant.warning => scheme.secondary,
+      ZamToastVariant.progress => scheme.muted,
+    };
+    final background = scheme.background.blend(baseColor, opacities.subtleTint);
+    final border = scheme.border.blend(baseColor, opacities.borderTint);
+    final foreground = ZamColorUtils.readableOn(background);
+    final subtleForeground = Color.alphaBlend(
+      foreground.withValues(alpha: opacities.subtleTint),
+      scheme.foreground.withValues(alpha: opacities.nearlyOpaque),
+    );
+    final icon = switch (variant) {
+      ZamToastVariant.success => icons.success,
+      ZamToastVariant.error => icons.error,
+      ZamToastVariant.info => icons.info,
+      ZamToastVariant.warning => icons.warning,
+      ZamToastVariant.progress => icons.info,
+    };
+
+    return ZamToastStyle(
+      variant: variant,
+      background: background,
+      border: border,
+      foreground: foreground,
+      subtleForeground: subtleForeground,
+      icon: icon,
+      iconForeground: ZamColorUtils.readableOn(background),
+      shadowColor: baseColor.withValues(alpha: opacities.borderTint),
+    );
+  }
+}

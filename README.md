@@ -23,7 +23,7 @@ dependencies:
   zam_ui:
     git:
       url: git@github.com:mikezamayias/zam_ui.git
-      ref: v0.1.0
+      ref: v0.1.1
 ```
 
 This package is intentionally marked with `publish_to: "none"` so it cannot be

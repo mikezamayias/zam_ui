@@ -1,5 +1,8 @@
 import 'dart:io';
 
+part 'src/finding.dart';
+part 'src/token_rule.dart';
+
 const _defaultRoots = ['lib', 'example/lib'];
 
 const _generatedSuffixes = [
@@ -11,7 +14,10 @@ const _generatedSuffixes = [
 
 const _allowedPathFragments = [
   '/src/tokens.dart',
+  '/src/tokens/',
+  '/src/theme/',
   '/src/utils.dart',
+  '/src/utils/',
   '/presets.dart',
 ];
 
@@ -178,24 +184,3 @@ Widget build(BuildContext context) {
 }
 
 String _normalize(String path) => path.replaceAll(r'\', '/');
-
-class _TokenRule {
-  const _TokenRule(this.message, this.pattern);
-
-  final String message;
-  final RegExp pattern;
-}
-
-class _Finding {
-  const _Finding({
-    required this.path,
-    required this.line,
-    required this.rule,
-    required this.source,
-  });
-
-  final String path;
-  final int line;
-  final String rule;
-  final String source;
-}

@@ -1,0 +1,77 @@
+part of '../tokens.dart';
+
+class ZamSpacingTokens {
+  const ZamSpacingTokens({
+    this.zero = 0,
+    this.one = 1,
+    this.two = 2,
+    this.three = 3,
+    this.four = 4,
+    this.six = 6,
+    this.eight = 8,
+    this.ten = 10,
+    this.eleven = 11,
+    this.twelve = 12,
+    this.thirteen = 13,
+    this.fourteen = 14,
+    this.sixteen = 16,
+    this.eighteen = 18,
+    this.twenty = 20,
+    this.twentyTwo = 22,
+    this.twentyFour = 24,
+    this.twentySix = 26,
+    this.twentyEight = 28,
+    this.thirtyTwo = 32,
+    this.thirtyFour = 34,
+    this.thirtyEight = 38,
+    this.forty = 40,
+    this.fortyFour = 44,
+    this.fortySix = 46,
+    this.fortyEight = 48,
+    this.fiftySix = 56,
+    this.sixtyFour = 64,
+    this.eighty = 80,
+    this.eightyEight = 88,
+    this.ninetySix = 96,
+    this.oneHundredTwentyEight = 128,
+    this.oneHundredEighty = 180,
+    this.twoHundredForty = 240,
+    this.threeHundredTwenty = 320,
+  });
+
+  final double zero;
+  final double one;
+  final double two;
+  final double three;
+  final double four;
+  final double six;
+  final double eight;
+  final double ten;
+  final double eleven;
+  final double twelve;
+  final double thirteen;
+  final double fourteen;
+  final double sixteen;
+  final double eighteen;
+  final double twenty;
+  final double twentyTwo;
+  final double twentyFour;
+  final double twentySix;
+  final double twentyEight;
+  final double thirtyTwo;
+  final double thirtyFour;
+  final double thirtyEight;
+  final double forty;
+  final double fortyFour;
+  final double fortySix;
+  final double fortyEight;
+  final double fiftySix;
+  final double sixtyFour;
+  final double eighty;
+  final double eightyEight;
+  final double ninetySix;
+  final double oneHundredTwentyEight;
+  final double oneHundredEighty;
+  final double twoHundredForty;
+  final double threeHundredTwenty;
+}
