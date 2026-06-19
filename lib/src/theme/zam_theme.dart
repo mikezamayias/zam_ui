@@ -21,6 +21,14 @@ class ZamTheme extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType<ZamTheme>()?.data;
   }
 
+  static ZamResolvedThemeData shadOf(BuildContext context) {
+    return ShadTheme.of(context);
+  }
+
+  static ZamResolvedThemeData? maybeShadOf(BuildContext context) {
+    return ShadTheme.maybeOf(context);
+  }
+
   @override
   bool updateShouldNotify(ZamTheme oldWidget) => data != oldWidget.data;
 }

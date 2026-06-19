@@ -86,4 +86,31 @@ void main() {
 
     expect(find.text('Test Sans'), findsOneWidget);
   });
+
+  testWidgets('ZamApp wires ZamTheme and ShadApp theme data', (tester) async {
+    final theme = ZamThemeData(
+      colors: ZamColorTokens.fromSeed(primary: primary),
+      typography: const ZamTypographyTokens(fontFamily: 'Test Sans'),
+      icons: icons,
+    );
+
+    await tester.pumpWidget(
+      ZamApp(
+        theme: theme,
+        home: Builder(
+          builder: (context) {
+            return Text(
+              context.zamTypography.fontFamily,
+              style: context.zamTypography.body(context),
+            );
+          },
+        ),
+      ),
+    );
+
+    final shadTheme = tester.widget<ShadApp>(find.byType(ShadApp));
+
+    expect(find.text('Test Sans'), findsOneWidget);
+    expect(shadTheme.theme!.colorScheme.primary, primary);
+  });
 }

@@ -38,6 +38,8 @@ class ZamTypographyTokens {
   FontWeight get medium => FontWeight.w500;
   FontWeight get semibold => FontWeight.w600;
   FontWeight get bold => FontWeight.w700;
+  FontWeight get extraBold => FontWeight.w800;
+  FontWeight get light => FontWeight.w300;
 
   TextStyle display(BuildContext context, {Color? color}) =>
       _base(context).h1.copyWith(

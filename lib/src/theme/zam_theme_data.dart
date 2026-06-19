@@ -18,6 +18,24 @@ class ZamThemeData {
           'fontFamily must not be empty.',
         );
 
+  factory ZamThemeData.fallback() {
+    return ZamThemeData(
+      colors: ZamColorTokens.fromSeed(primary: const Color(0xFF06B6D4)),
+      typography: const ZamTypographyTokens(
+        fontFamily: 'Inter',
+        monoFontFamily: 'JetBrains Mono',
+      ),
+      icons: const ZamIconSet(
+        info: IconData(0xe88e, fontFamily: 'MaterialIcons'),
+        success: IconData(0xe876, fontFamily: 'MaterialIcons'),
+        warning: IconData(0xe002, fontFamily: 'MaterialIcons'),
+        error: IconData(0xe000, fontFamily: 'MaterialIcons'),
+        back: IconData(0xe5c4, fontFamily: 'MaterialIcons'),
+        chevronRight: IconData(0xe5cc, fontFamily: 'MaterialIcons'),
+      ),
+    );
+  }
+
   final ZamColorTokens colors;
   final ZamTypographyTokens typography;
   final ZamIconSet icons;

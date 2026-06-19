@@ -29,6 +29,7 @@ class ZamIconButton extends StatelessWidget {
       ZamButtonVariant.outline => ShadButtonVariant.outline,
       ZamButtonVariant.ghost => ShadButtonVariant.ghost,
       ZamButtonVariant.destructive => ShadButtonVariant.destructive,
+      ZamButtonVariant.link => ShadButtonVariant.link,
     };
 
     return Semantics(

@@ -2,55 +2,135 @@ part of '../components.dart';
 
 class ZamButton extends StatelessWidget {
   const ZamButton({
-    required this.label,
     super.key,
+    this.label,
+    this.child,
     this.onPressed,
     this.variant = ZamButtonVariant.primary,
     this.size = ZamButtonSize.medium,
     this.leading,
+    this.trailing,
     this.isExpanded = false,
     this.isLoading = false,
-  });
+    this.enabled,
+    this.width,
+    this.height,
+    this.padding,
+  }) : assert(
+          label != null || child != null,
+          'ZamButton requires either label or child.',
+        );
 
-  final String label;
+  const ZamButton.outline({
+    super.key,
+    this.label,
+    this.child,
+    this.onPressed,
+    this.size = ZamButtonSize.medium,
+    this.leading,
+    this.trailing,
+    this.isExpanded = false,
+    this.isLoading = false,
+    this.enabled,
+    this.width,
+    this.height,
+    this.padding,
+  })  : assert(
+          label != null || child != null,
+          'ZamButton.outline requires either label or child.',
+        ),
+        variant = ZamButtonVariant.outline;
+
+  const ZamButton.destructive({
+    super.key,
+    this.label,
+    this.child,
+    this.onPressed,
+    this.size = ZamButtonSize.medium,
+    this.leading,
+    this.trailing,
+    this.isExpanded = false,
+    this.isLoading = false,
+    this.enabled,
+    this.width,
+    this.height,
+    this.padding,
+  })  : assert(
+          label != null || child != null,
+          'ZamButton.destructive requires either label or child.',
+        ),
+        variant = ZamButtonVariant.destructive;
+
+  const ZamButton.link({
+    super.key,
+    this.label,
+    this.child,
+    this.onPressed,
+    this.size = ZamButtonSize.medium,
+    this.leading,
+    this.trailing,
+    this.isExpanded = false,
+    this.isLoading = false,
+    this.enabled,
+    this.width,
+    this.height,
+    this.padding,
+  })  : assert(
+          label != null || child != null,
+          'ZamButton.link requires either label or child.',
+        ),
+        variant = ZamButtonVariant.link;
+
+  final String? label;
+  final Widget? child;
   final VoidCallback? onPressed;
   final ZamButtonVariant variant;
   final ZamButtonSize size;
   final Widget? leading;
+  final Widget? trailing;
   final bool isExpanded;
   final bool isLoading;
+  final bool? enabled;
+  final double? width;
+  final double? height;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     final theme = context.zam;
-    final enabled = onPressed != null && !isLoading;
+    final hasAction = onPressed != null;
+    final effectiveEnabled = (enabled ?? hasAction) && hasAction && !isLoading;
+    final effectiveLabel = label ?? '';
     final shadVariant = switch (variant) {
       ZamButtonVariant.primary => ShadButtonVariant.primary,
       ZamButtonVariant.secondary => ShadButtonVariant.secondary,
       ZamButtonVariant.outline => ShadButtonVariant.outline,
       ZamButtonVariant.ghost => ShadButtonVariant.ghost,
       ZamButtonVariant.destructive => ShadButtonVariant.destructive,
+      ZamButtonVariant.link => ShadButtonVariant.link,
     };
     final shadSize = switch (size) {
-      ZamButtonSize.small => ShadButtonSize.sm,
-      ZamButtonSize.medium => ShadButtonSize.regular,
-      ZamButtonSize.large => ShadButtonSize.lg,
+      ZamButtonSize.small || ZamButtonSize.sm => ShadButtonSize.sm,
+      ZamButtonSize.medium || ZamButtonSize.regular => ShadButtonSize.regular,
+      ZamButtonSize.large || ZamButtonSize.lg => ShadButtonSize.lg,
     };
 
     return Semantics(
       button: true,
       label: label,
-      onTap: enabled ? onPressed : null,
+      onTap: effectiveEnabled ? onPressed : null,
       child: ShadButton.raw(
         variant: shadVariant,
         size: shadSize,
-        enabled: enabled,
-        onPressed: enabled ? onPressed : null,
+        enabled: effectiveEnabled,
+        onPressed: effectiveEnabled ? onPressed : null,
         leading: isLoading ? const _ZamLoadingDot() : leading,
-        width: isExpanded ? double.infinity : null,
-        height: theme.sizes.buttonLargeHeight,
+        trailing: trailing,
+        width: isExpanded ? double.infinity : width,
+        height: height ?? theme.sizes.buttonLargeHeight,
+        padding: padding,
         gap: theme.spacing.eight,
-        child: Text(label),
+        child: child ?? Text(effectiveLabel),
       ),
     );
   }

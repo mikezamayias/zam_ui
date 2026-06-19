@@ -66,6 +66,44 @@ void main() {
     expect(pressed, isTrue);
   });
 
+  testWidgets('maps link buttons to the shad link variant', (tester) async {
+    await tester.pumpWidget(
+      harness(
+        ZamButton.link(
+          label: 'Learn more',
+          onPressed: () {},
+        ),
+      ),
+    );
+
+    final button = tester.widget<ShadButton>(find.byType(ShadButton));
+
+    expect(button.variant, ShadButtonVariant.link);
+  });
+
+  testWidgets('keeps callback-less buttons disabled', (tester) async {
+    await tester.pumpWidget(
+      harness(
+        const ZamButton(
+          label: 'No-op',
+          enabled: true,
+        ),
+      ),
+    );
+
+    final button = tester.widget<ShadButton>(find.byType(ShadButton));
+
+    expect(button.enabled, isFalse);
+    expect(button.onPressed, isNull);
+  });
+
+  testWidgets('requires button content', (tester) async {
+    expect(
+      ZamButton.new,
+      throwsA(isA<AssertionError>()),
+    );
+  });
+
   testWidgets('asserts semantic labels for interactive icon buttons',
       (tester) async {
     expect(
