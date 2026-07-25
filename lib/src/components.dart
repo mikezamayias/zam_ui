@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:zam_ui/src/theme.dart';
+import 'package:zam_ui/src/utils.dart';
 
 part 'components/zam_button_variant.dart';
 part 'components/zam_button_size.dart';
@@ -55,7 +56,7 @@ Future<T?> showZamSheet<T>({
   Color? backgroundColor,
   String barrierLabel = '',
   ShapeBorder? shape,
-  Color barrierColor = const Color(0xcc000000),
+  Color barrierColor = ZamColorUtils.barrier,
   bool useRootNavigator = false,
   bool isDismissible = true,
   RouteSettings? routeSettings,
@@ -84,7 +85,7 @@ Future<T?> showZamDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool barrierDismissible = true,
-  Color barrierColor = const Color(0xcc000000),
+  Color barrierColor = ZamColorUtils.barrier,
   String barrierLabel = '',
   bool useRootNavigator = true,
   RouteSettings? routeSettings,

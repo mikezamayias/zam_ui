@@ -4,6 +4,7 @@ abstract final class ZamColorUtils {
   static const black = Color(0xFF000000);
   static const white = Color(0xFFFFFFFF);
   static const transparent = Color(0x00000000);
+  static const barrier = Color(0xCC000000);
 
   static Color readableOn(Color color) {
     return color.computeLuminance() > 0.5 ? black : white;
