@@ -1,3 +1,22 @@
 part of '../components.dart';
 
-enum ZamButtonVariant { primary, secondary, outline, ghost, destructive, link }
+/// Button visual variant enum (primary, secondary, outline, ghost, destructive, link).
+enum ZamButtonVariant {
+  /// Primary filled button variant.
+  primary,
+
+  /// Secondary subtle filled button variant.
+  secondary,
+
+  /// Outlined border button variant.
+  outline,
+
+  /// Transparent ghost button variant.
+  ghost,
+
+  /// Destructive action button variant.
+  destructive,
+
+  /// Text link button variant.
+  link,
+}

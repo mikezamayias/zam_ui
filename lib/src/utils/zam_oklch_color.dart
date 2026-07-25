@@ -1,34 +1,45 @@
 part of '../utils.dart';
 
+/// Representation of a color in the OKLCH perceptually uniform color space.
 class ZamOklchColor {
+  /// Creates a [ZamOklchColor] with specified [lightness], [chroma], and [hue].
   const ZamOklchColor({
     required this.lightness,
     required this.chroma,
     required this.hue,
   });
 
+  /// Default warm OKLCH color benchmark.
   static const warm = ZamOklchColor(
     lightness: 0.57,
     chroma: 0.110,
     hue: 40,
   );
 
+  /// Default neutral OKLCH color benchmark.
   static const neutral = ZamOklchColor(
     lightness: 0.47,
     chroma: 0,
     hue: 250,
   );
 
+  /// Default cool OKLCH color benchmark.
   static const cool = ZamOklchColor(
     lightness: 0.57,
     chroma: 0.080,
     hue: 160,
   );
 
+  /// Perceptual lightness component (0.0 to 1.0).
   final double lightness;
+
+  /// Perceptual chroma/saturation component.
   final double chroma;
+
+  /// Hue angle in degrees (0 to 360).
   final double hue;
 
+  /// Converts this OKLCH color into a standard sRGB Flutter [Color].
   Color toColor() {
     final hRad = hue * math.pi / 180;
     final a = chroma * math.cos(hRad);
@@ -36,6 +47,7 @@ class ZamOklchColor {
     return _oklabToColor(lightness, a, b);
   }
 
+  /// Interpolates a color along an OKLCH scale based on a normalized [-1, 1] [score].
   static Color scale(
     double score, {
     ZamOklchColor negative = warm,
@@ -50,6 +62,7 @@ class ZamOklchColor {
     return neutral._lerpTo(positive, (t - 0.5) * 2).toColor();
   }
 
+  /// Returns a 5-step continuous color gradient from negative to positive OKLCH endpoints.
   static List<Color> get gradient => [
         scale(-1),
         scale(-0.5),

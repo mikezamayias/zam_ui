@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Screen header component providing title, optional subtitle, back navigation, and trailing actions.
 class ZamScreenHeader extends StatelessWidget {
+  /// Creates a [ZamScreenHeader].
   const ZamScreenHeader({
     required this.title,
     super.key,
@@ -12,12 +14,25 @@ class ZamScreenHeader extends StatelessWidget {
     this.backLabel = 'Back',
   });
 
+  /// Main screen title text.
   final String title;
+
+  /// Optional secondary subtitle text.
   final String? subtitle;
+
+  /// Optional back button action callback.
   final VoidCallback? onBack;
+
+  /// Optional trailing action widget.
   final Widget? trailing;
+
+  /// Custom padding around header.
   final EdgeInsetsGeometry? padding;
+
+  /// Whether to render a compact header title style.
   final bool compact;
+
+  /// Accessibility semantic label for back action button.
   final String backLabel;
 
   @override

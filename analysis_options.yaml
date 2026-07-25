@@ -8,7 +8,7 @@ analyzer:
 
 linter:
   rules:
-    public_member_api_docs: false
+    public_member_api_docs: true
     one_member_abstracts: false
     lines_longer_than_80_chars: false
     comment_references: false

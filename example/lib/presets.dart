@@ -1,13 +1,25 @@
 import 'package:flutter/widgets.dart';
 import 'package:zam_ui/zam_ui.dart';
 
+/// Info icon data.
 const infoIcon = IconData(0xe88e, fontFamily: 'MaterialIcons');
+
+/// Success icon data.
 const successIcon = IconData(0xe876, fontFamily: 'MaterialIcons');
+
+/// Warning icon data.
 const warningIcon = IconData(0xe002, fontFamily: 'MaterialIcons');
+
+/// Error icon data.
 const errorIcon = IconData(0xe000, fontFamily: 'MaterialIcons');
+
+/// Back icon data.
 const backIcon = IconData(0xe5c4, fontFamily: 'MaterialIcons');
+
+/// Chevron right icon data.
 const chevronRightIcon = IconData(0xe5cc, fontFamily: 'MaterialIcons');
 
+/// Example icon set mapping.
 const exampleIcons = ZamIconSet(
   info: infoIcon,
   success: successIcon,
@@ -17,7 +29,9 @@ const exampleIcons = ZamIconSet(
   chevronRight: chevronRightIcon,
 );
 
+/// Wellness brand preset implementation.
 class WellnessPreset implements ZamPreset {
+  /// Creates a [WellnessPreset].
   const WellnessPreset();
 
   @override
@@ -37,7 +51,9 @@ class WellnessPreset implements ZamPreset {
   ZamThemeData get dark => light;
 }
 
+/// Fitness brand preset implementation.
 class FitnessPreset implements ZamPreset {
+  /// Creates a [FitnessPreset].
   const FitnessPreset();
 
   @override
@@ -57,5 +73,8 @@ class FitnessPreset implements ZamPreset {
   ZamThemeData get dark => light;
 }
 
+/// Wellness preset singleton instance.
 const wellnessPreset = WellnessPreset();
+
+/// Fitness preset singleton instance.
 const fitnessPreset = FitnessPreset();

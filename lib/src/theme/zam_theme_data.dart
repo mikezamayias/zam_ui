@@ -1,6 +1,11 @@
 part of '../theme.dart';
 
+/// Aggregated design system theme configuration.
+///
+/// Combines color tokens, typography tokens, icons, and layout scale tokens
+/// into a single immutable configuration object.
 class ZamThemeData {
+  /// Creates a [ZamThemeData] configuration.
   ZamThemeData({
     required this.colors,
     required this.typography,
@@ -18,6 +23,7 @@ class ZamThemeData {
           'fontFamily must not be empty.',
         );
 
+  /// Creates a fallback theme configuration for testing or standalone usage.
   factory ZamThemeData.fallback() {
     return ZamThemeData(
       colors: ZamColorTokens.fromSeed(primary: const Color(0xFF06B6D4)),
@@ -36,18 +42,40 @@ class ZamThemeData {
     );
   }
 
+  /// Color tokens.
   final ZamColorTokens colors;
+
+  /// Typography tokens.
   final ZamTypographyTokens typography;
+
+  /// Icon set mapping.
   final ZamIconSet icons;
+
+  /// Spacing scale tokens.
   final ZamSpacingTokens spacing;
+
+  /// Inset tokens derived from [spacing].
   final ZamInsetsTokens insets;
+
+  /// Size tokens derived from [spacing].
   final ZamSizeTokens sizes;
+
+  /// Corner radius tokens.
   final ZamRadiusTokens radius;
+
+  /// Stroke thickness tokens.
   final ZamStrokeTokens strokes;
+
+  /// Opacity tokens.
   final ZamOpacityTokens opacities;
+
+  /// Box shadow elevation tokens.
   final ZamShadowTokens shadows;
+
+  /// Motion and animation tokens.
   final ZamMotionTokens motion;
 
+  /// Creates a copy of this theme configuration with optional overridden fields.
   ZamThemeData copyWith({
     ZamColorTokens? colors,
     ZamTypographyTokens? typography,
@@ -72,6 +100,7 @@ class ZamThemeData {
     );
   }
 
+  /// Converts design tokens into a [ShadThemeData] object for a given [brightness] and optional [isOled] mode.
   ShadThemeData toShadThemeData(
     Brightness brightness, {
     bool isOled = false,
@@ -114,6 +143,7 @@ class ZamThemeData {
     );
   }
 
+  /// Resolves the [ZamToastStyle] for a specific [brightness] and toast [variant].
   ZamToastStyle toastStyle(Brightness brightness, ZamToastVariant variant) {
     final shadTheme = toShadThemeData(brightness);
     final scheme = shadTheme.colorScheme;

@@ -1,13 +1,18 @@
 part of '../main.dart';
 
+/// Example home page widget showcasing preset switching and component primitives.
 class ExampleHome extends StatelessWidget {
+  /// Creates an [ExampleHome] widget.
   const ExampleHome({
     required this.presetName,
     required this.onTogglePreset,
     super.key,
   });
 
+  /// Name of the active brand preset.
   final String presetName;
+
+  /// Callback executed when toggling preset.
   final VoidCallback onTogglePreset;
 
   @override

@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Modal dialog component with static helper methods for messages and confirmation dialogs.
 class ZamDialog extends StatelessWidget {
+  /// Creates a [ZamDialog].
   const ZamDialog({
     required this.title,
     required this.message,
@@ -10,12 +12,22 @@ class ZamDialog extends StatelessWidget {
     this.actions = const [],
   });
 
+  /// Dialog title text.
   final String title;
+
+  /// Dialog description message text.
   final String message;
+
+  /// Optional header icon.
   final IconData? icon;
+
+  /// Whether the dialog represents a destructive confirmation.
   final bool destructive;
+
+  /// List of action widgets displayed at the bottom of the dialog.
   final List<Widget> actions;
 
+  /// Displays an informational alert dialog with an OK confirmation button.
   static Future<void> showMessage({
     required BuildContext context,
     required String title,
@@ -41,6 +53,7 @@ class ZamDialog extends StatelessWidget {
     );
   }
 
+  /// Displays a boolean confirmation dialog returning `true` if confirmed or `false` if cancelled.
   static Future<bool> showConfirmation({
     required BuildContext context,
     required String title,

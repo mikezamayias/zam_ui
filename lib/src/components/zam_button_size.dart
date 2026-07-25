@@ -1,3 +1,22 @@
 part of '../components.dart';
 
-enum ZamButtonSize { small, medium, large, sm, regular, lg }
+/// Button size scale enum (small, medium, large).
+enum ZamButtonSize {
+  /// Small button size.
+  small,
+
+  /// Medium button size.
+  medium,
+
+  /// Large button size.
+  large,
+
+  /// Alias for [small].
+  sm,
+
+  /// Alias for [medium].
+  regular,
+
+  /// Alias for [large].
+  lg,
+}

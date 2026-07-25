@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Toast content widget rendering icon, title, description, and optional action within a styled surface.
 class ZamToastContent extends StatelessWidget {
+  /// Creates a [ZamToastContent] widget.
   const ZamToastContent({
     required this.style,
     required this.title,
@@ -9,9 +11,16 @@ class ZamToastContent extends StatelessWidget {
     this.action,
   });
 
+  /// Toast visual style configuration.
   final ZamToastStyle style;
+
+  /// Main toast title.
   final String title;
+
+  /// Optional toast description widget.
   final Widget? description;
+
+  /// Optional action button widget.
   final Widget? action;
 
   @override

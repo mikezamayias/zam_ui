@@ -1,6 +1,8 @@
 part of '../tokens.dart';
 
+/// Color tokens defining primary brand colors, surface palettes, and utility colors.
 class ZamColorTokens {
+  /// Creates a set of [ZamColorTokens] with explicit surface configurations.
   const ZamColorTokens({
     required this.primary,
     required this.light,
@@ -11,6 +13,7 @@ class ZamColorTokens {
     this.transparent = ZamColorUtils.transparent,
   });
 
+  /// Generates a complete [ZamColorTokens] set from a primary seed color.
   factory ZamColorTokens.fromSeed({
     required Color primary,
     Color lightBackground = const Color(0xFFFAF9F7),
@@ -63,14 +66,28 @@ class ZamColorTokens {
     );
   }
 
+  /// Primary brand color.
   final Color primary;
+
+  /// Light mode surface colors.
   final ZamSurfaceColors light;
+
+  /// Dark mode surface colors.
   final ZamSurfaceColors dark;
+
+  /// Pure black OLED mode surface colors.
   final ZamSurfaceColors oled;
+
+  /// Absolute black color.
   final Color black;
+
+  /// Absolute white color.
   final Color white;
+
+  /// Fully transparent color.
   final Color transparent;
 
+  /// Returns the corresponding [ZamSurfaceColors] for a given [brightness] and optional [isOled] mode.
   ZamSurfaceColors forBrightness(
     Brightness brightness, {
     bool isOled = false,

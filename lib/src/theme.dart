@@ -25,6 +25,11 @@ part 'theme/zam_theme.dart';
 part 'theme/zam_theme_context.dart';
 part 'theme/zam_preset.dart';
 
+/// Type alias for resolved shadcn theme data.
 typedef ZamResolvedThemeData = ShadThemeData;
+
+/// Type alias for resolved shadcn color scheme.
 typedef ZamResolvedColorScheme = ShadColorScheme;
+
+/// Type alias for resolved shadcn theme widget.
 typedef ZamResolvedTheme = ShadTheme;

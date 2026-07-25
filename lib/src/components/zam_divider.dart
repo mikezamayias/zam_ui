@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Tokenized horizontal and vertical divider component.
 class ZamDivider extends StatelessWidget {
+  /// Creates a horizontal [ZamDivider].
   const ZamDivider({
     super.key,
     this.color,
@@ -10,6 +12,7 @@ class ZamDivider extends StatelessWidget {
     this.vertical = false,
   });
 
+  /// Creates a vertical [ZamDivider].
   const ZamDivider.vertical({
     super.key,
     this.color,
@@ -18,10 +21,19 @@ class ZamDivider extends StatelessWidget {
     this.endIndent,
   }) : vertical = true;
 
+  /// Custom divider color.
   final Color? color;
+
+  /// Custom stroke thickness.
   final double? thickness;
+
+  /// Leading indent padding.
   final double? indent;
+
+  /// Trailing indent padding.
   final double? endIndent;
+
+  /// Whether the divider is orientation vertical.
   final bool vertical;
 
   @override

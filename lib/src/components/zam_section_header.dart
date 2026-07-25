@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Section header component for grouping content blocks with title, subtitle, and optional trailing widget.
 class ZamSectionHeader extends StatelessWidget {
+  /// Creates a [ZamSectionHeader].
   const ZamSectionHeader({
     required this.title,
     super.key,
@@ -8,8 +10,13 @@ class ZamSectionHeader extends StatelessWidget {
     this.trailing,
   });
 
+  /// Main section title.
   final String title;
+
+  /// Optional section subtitle.
   final String? subtitle;
+
+  /// Optional trailing action widget.
   final Widget? trailing;
 
   @override

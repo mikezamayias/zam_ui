@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Empty state placeholder component displaying an icon container, title, message, and optional action button.
 class ZamEmptyState extends StatelessWidget {
+  /// Creates a [ZamEmptyState].
   const ZamEmptyState({
     required this.icon,
     required this.title,
@@ -9,9 +11,16 @@ class ZamEmptyState extends StatelessWidget {
     this.action,
   });
 
+  /// Icon data for empty state graphic.
   final IconData icon;
+
+  /// Main empty state title.
   final String title;
+
+  /// Explanatory empty state message.
   final String message;
+
+  /// Optional call-to-action button.
   final Widget? action;
 
   @override

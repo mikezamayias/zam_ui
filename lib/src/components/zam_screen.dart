@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Screen layout wrapper managing safe area boundaries, padding, and optional scrolling.
 class ZamScreen extends StatelessWidget {
+  /// Creates a [ZamScreen].
   const ZamScreen({
     required this.child,
     super.key,
@@ -9,9 +11,16 @@ class ZamScreen extends StatelessWidget {
     this.safeBottom = false,
   });
 
+  /// Screen body content.
   final Widget child;
+
+  /// Optional padding around content.
   final EdgeInsetsGeometry? padding;
+
+  /// Whether the screen body should wrap in a [SingleChildScrollView].
   final bool scrollable;
+
+  /// Whether to enforce bottom safe area inset.
   final bool safeBottom;
 
   @override

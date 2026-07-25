@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Filter pill button component supporting toggle selection states.
 class ZamFilterPill extends StatelessWidget {
+  /// Creates a [ZamFilterPill].
   const ZamFilterPill({
     required this.label,
     required this.selected,
@@ -8,8 +10,13 @@ class ZamFilterPill extends StatelessWidget {
     super.key,
   });
 
+  /// Filter pill label text.
   final String label;
+
+  /// Whether the pill is selected.
   final bool selected;
+
+  /// Tap selection callback.
   final VoidCallback onTap;
 
   @override

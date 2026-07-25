@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Primary button component supporting multiple variants, sizes, loading states, and leading/trailing slots.
 class ZamButton extends StatelessWidget {
+  /// Creates a standard [ZamButton].
   const ZamButton({
     super.key,
     this.label,
@@ -21,6 +23,7 @@ class ZamButton extends StatelessWidget {
           'ZamButton requires either label or child.',
         );
 
+  /// Creates an outlined variant [ZamButton].
   const ZamButton.outline({
     super.key,
     this.label,
@@ -41,6 +44,7 @@ class ZamButton extends StatelessWidget {
         ),
         variant = ZamButtonVariant.outline;
 
+  /// Creates a destructive variant [ZamButton].
   const ZamButton.destructive({
     super.key,
     this.label,
@@ -61,6 +65,7 @@ class ZamButton extends StatelessWidget {
         ),
         variant = ZamButtonVariant.destructive;
 
+  /// Creates a link variant [ZamButton].
   const ZamButton.link({
     super.key,
     this.label,
@@ -81,18 +86,43 @@ class ZamButton extends StatelessWidget {
         ),
         variant = ZamButtonVariant.link;
 
+  /// Button text label.
   final String? label;
+
+  /// Custom child widget.
   final Widget? child;
+
+  /// Callback executed when the button is pressed.
   final VoidCallback? onPressed;
+
+  /// Visual variant style.
   final ZamButtonVariant variant;
+
+  /// Size configuration.
   final ZamButtonSize size;
+
+  /// Optional leading widget (icon/avatar).
   final Widget? leading;
+
+  /// Optional trailing widget.
   final Widget? trailing;
+
+  /// Whether the button should expand to fill horizontal width.
   final bool isExpanded;
+
+  /// Whether to display a loading indicator.
   final bool isLoading;
+
+  /// Explicit enable/disable state override.
   final bool? enabled;
+
+  /// Custom width.
   final double? width;
+
+  /// Custom height.
   final double? height;
+
+  /// Custom padding.
   final EdgeInsetsGeometry? padding;
 
   @override

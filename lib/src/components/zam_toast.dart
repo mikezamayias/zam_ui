@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Toast manager utility for displaying token-styled overlay notifications.
 abstract final class ZamToast {
+  /// Displays a toast notification with specified [variant], [title], and optional [description].
   static void show(
     BuildContext context, {
     required String title,

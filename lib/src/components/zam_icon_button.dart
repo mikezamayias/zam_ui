@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Icon button component requiring semantic labels for interactive instances.
 class ZamIconButton extends StatelessWidget {
+  /// Creates a [ZamIconButton].
   const ZamIconButton({
     required this.icon,
     super.key,
@@ -13,10 +15,19 @@ class ZamIconButton extends StatelessWidget {
           'Interactive ZamIconButton instances must provide semanticLabel.',
         );
 
+  /// Icon widget to display.
   final Widget icon;
+
+  /// Callback executed when pressed.
   final VoidCallback? onPressed;
+
+  /// Visual variant style.
   final ZamButtonVariant variant;
+
+  /// Custom dimension (width and height).
   final double? size;
+
+  /// Accessibility semantic label.
   final String? semanticLabel;
 
   @override

@@ -1,3 +1,6 @@
+// Widget previews are development preview markers for IDE tooling.
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/widget_previews.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';

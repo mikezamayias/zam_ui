@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Form field layout wrapper managing label text, required indicator, description, and error messaging around an input child.
 class ZamFormField extends StatelessWidget {
+  /// Creates a [ZamFormField].
   const ZamFormField({
     required this.label,
     required this.child,
@@ -10,10 +12,19 @@ class ZamFormField extends StatelessWidget {
     this.isRequired = false,
   });
 
+  /// Field label text.
   final String label;
+
+  /// Input child widget.
   final Widget child;
+
+  /// Optional helper description text.
   final String? description;
+
+  /// Optional validation error text.
   final String? error;
+
+  /// Whether to display a required asterisk indicator.
   final bool isRequired;
 
   @override

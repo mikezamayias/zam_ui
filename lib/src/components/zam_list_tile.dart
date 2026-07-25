@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// List tile component displaying leading slot, title, subtitle, trailing slot, and optional bottom divider.
 class ZamListTile extends StatelessWidget {
+  /// Creates a [ZamListTile].
   const ZamListTile({
     required this.title,
     super.key,
@@ -17,14 +19,31 @@ class ZamListTile extends StatelessWidget {
           'Interactive ZamListTile instances must provide semanticLabel.',
         );
 
+  /// Main title text.
   final String title;
+
+  /// Optional subtitle text.
   final String? subtitle;
+
+  /// Optional leading widget (icon/avatar).
   final Widget? leading;
+
+  /// Optional trailing widget.
   final Widget? trailing;
+
+  /// Tap callback for interactive tiles.
   final VoidCallback? onTap;
+
+  /// Accessibility semantic label.
   final String? semanticLabel;
+
+  /// Custom padding.
   final EdgeInsetsGeometry? padding;
+
+  /// Whether to display a bottom divider.
   final bool showDivider;
+
+  /// Whether to render in dense compact padding mode.
   final bool dense;
 
   @override

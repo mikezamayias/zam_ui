@@ -1,6 +1,8 @@
 part of '../components.dart';
 
+/// Elevated card or container surface component with token-driven borders, shadows, and padding.
 class ZamSurface extends StatelessWidget {
+  /// Creates a [ZamSurface].
   const ZamSurface({
     required this.child,
     super.key,
@@ -17,14 +19,31 @@ class ZamSurface extends StatelessWidget {
           'Interactive ZamSurface instances must provide semanticLabel.',
         );
 
+  /// Inner child content.
   final Widget child;
+
+  /// Custom padding.
   final EdgeInsetsGeometry? padding;
+
+  /// Custom margin.
   final EdgeInsetsGeometry? margin;
+
+  /// Surface background color override.
   final Color? backgroundColor;
+
+  /// Border color override.
   final Color? borderColor;
+
+  /// Border radius override.
   final BorderRadiusGeometry? radius;
+
+  /// Whether to render elevation shadow.
   final bool withShadow;
+
+  /// Optional tap callback.
   final VoidCallback? onTap;
+
+  /// Accessibility semantic label when interactive.
   final String? semanticLabel;
 
   @override
