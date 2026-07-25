@@ -1,5 +1,7 @@
 # zam_ui
 
+[![CI](https://github.com/mikezamayias/zam_ui/actions/workflows/ci.yml/badge.svg)](https://github.com/mikezamayias/zam_ui/actions/workflows/ci.yml)
+
 Private, app-agnostic Flutter UI foundation for cohesive Zam apps.
 
 `zam_ui` provides configurable design tokens, shadcn theme generation, and
