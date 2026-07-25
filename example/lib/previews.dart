@@ -141,3 +141,103 @@ Widget toastContentPreview() => _themed(
         description: const Text('Operation completed.'),
       ),
     );
+
+// -- Dividers --
+
+@Preview(name: 'Horizontal Divider', group: 'Layout')
+Widget dividerPreview() => _themed(
+      Padding(
+        padding: wellnessPreset.light.insets.card,
+        child: const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Above'),
+            ZamDivider(),
+            Text('Below'),
+          ],
+        ),
+      ),
+    );
+
+// -- List Tiles --
+
+@Preview(name: 'List Tile', group: 'Data')
+Widget listTilePreview() => _themed(
+      const ZamListTile(
+        title: 'Account Settings',
+        subtitle: 'Manage your preferences',
+        leading: Icon(LucideIcons.settings),
+      ),
+    );
+
+@Preview(name: 'List Tile (Tappable)', group: 'Data')
+Widget listTileTappablePreview() => _themed(
+      ZamListTile(
+        title: 'Notifications',
+        subtitle: 'Push and email alerts',
+        leading: const Icon(LucideIcons.bell),
+        semanticLabel: 'Notifications',
+        onTap: () {},
+      ),
+    );
+
+@Preview(name: 'List Tile (With Divider)', group: 'Data')
+Widget listTileDividerPreview() => _themed(
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ZamListTile(
+            title: 'Privacy',
+            leading: const Icon(LucideIcons.shield),
+            showDivider: true,
+            semanticLabel: 'Privacy',
+            onTap: () {},
+          ),
+          ZamListTile(
+            title: 'Security',
+            leading: const Icon(LucideIcons.lock),
+            semanticLabel: 'Security',
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+
+// -- Form Fields --
+
+@Preview(name: 'Form Field', group: 'Inputs')
+Widget formFieldPreview() => _themed(
+      Padding(
+        padding: wellnessPreset.light.insets.card,
+        child: const ZamFormField(
+          label: 'Email',
+          description: 'We will never share your email.',
+          child: ZamInput(),
+        ),
+      ),
+    );
+
+@Preview(name: 'Form Field (Required)', group: 'Inputs')
+Widget formFieldRequiredPreview() => _themed(
+      Padding(
+        padding: wellnessPreset.light.insets.card,
+        child: const ZamFormField(
+          label: 'Password',
+          isRequired: true,
+          child: ZamInput(),
+        ),
+      ),
+    );
+
+@Preview(name: 'Form Field (Error)', group: 'Inputs')
+Widget formFieldErrorPreview() => _themed(
+      Padding(
+        padding: wellnessPreset.light.insets.card,
+        child: const ZamFormField(
+          label: 'Email',
+          isRequired: true,
+          error: 'Please enter a valid email address.',
+          child: ZamInput(),
+        ),
+      ),
+    );

@@ -22,6 +22,9 @@ part 'components/zam_skeleton.dart';
 part 'components/_zam_skeleton_state.dart';
 part 'components/_zam_sliding_gradient_transform.dart';
 part 'components/_zam_loading_dot.dart';
+part 'components/zam_divider.dart';
+part 'components/zam_list_tile.dart';
+part 'components/zam_form_field.dart';
 
 typedef ZamBadge = ShadBadge;
 typedef ZamBorder = ShadBorder;

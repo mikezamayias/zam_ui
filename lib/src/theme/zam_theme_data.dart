@@ -48,6 +48,30 @@ class ZamThemeData {
   final ZamShadowTokens shadows;
   final ZamMotionTokens motion;
 
+  ZamThemeData copyWith({
+    ZamColorTokens? colors,
+    ZamTypographyTokens? typography,
+    ZamIconSet? icons,
+    ZamSpacingTokens? spacing,
+    ZamRadiusTokens? radius,
+    ZamStrokeTokens? strokes,
+    ZamOpacityTokens? opacities,
+    ZamShadowTokens? shadows,
+    ZamMotionTokens? motion,
+  }) {
+    return ZamThemeData(
+      colors: colors ?? this.colors,
+      typography: typography ?? this.typography,
+      icons: icons ?? this.icons,
+      spacing: spacing ?? this.spacing,
+      radius: radius ?? this.radius,
+      strokes: strokes ?? this.strokes,
+      opacities: opacities ?? this.opacities,
+      shadows: shadows ?? this.shadows,
+      motion: motion ?? this.motion,
+    );
+  }
+
   ShadThemeData toShadThemeData(
     Brightness brightness, {
     bool isOled = false,

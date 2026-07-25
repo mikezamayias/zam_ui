@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0
+
+- Added `ZamFormField` wrapper for label, description, error, and required
+  indicator around any input widget.
+- Added `ZamListTile` with leading/trailing slots, title/subtitle,
+  tap semantics, optional divider, and dense mode.
+- Added `ZamDivider` horizontal and vertical divider using tokenized
+  stroke width and theme border color.
+- Added `ZamThemeData.copyWith()` for composing theme variants without
+  full reconstruction.
+- Added widget previews for all new components.
+- Added 15 new tests covering `copyWith`, `ZamDivider`, `ZamListTile`,
+  and `ZamFormField`.
+
 ## 0.1.3
 
 - Added `ZamPreset` abstract interface for type-safe app-owned brand presets.
