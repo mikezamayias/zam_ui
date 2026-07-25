@@ -1,11 +1,17 @@
 part of '../main.dart';
 
 class _ExampleAppState extends State<ExampleApp> {
-  bool _fitness = false;
+  ZamPreset _preset = wellnessPreset;
+
+  void _togglePreset() {
+    setState(() {
+      _preset = _preset is WellnessPreset ? fitnessPreset : wellnessPreset;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = _fitness ? fitnessTheme : wellnessTheme;
+    final theme = _preset.light;
 
     return ZamTheme(
       data: theme,
@@ -13,9 +19,8 @@ class _ExampleAppState extends State<ExampleApp> {
         theme: theme.toShadThemeData(Brightness.light),
         darkTheme: theme.toShadThemeData(Brightness.dark),
         home: ExampleHome(
-          presetName:
-              _fitness ? 'Peakward-style fitness' : 'Healpen-style wellness',
-          onTogglePreset: () => setState(() => _fitness = !_fitness),
+          presetName: _preset.name,
+          onTogglePreset: _togglePreset,
         ),
       ),
     );

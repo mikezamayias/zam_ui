@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.3
+
+- Added `ZamPreset` abstract interface for type-safe app-owned brand presets.
+- Added `ZamColorUtils.barrier` tokenized constant for dialog/sheet overlays.
+- Added widget previews to the example app for interactive component testing.
+- Replaced hard-coded barrier colors in `showZamSheet` and `showZamDialog`
+  with `ZamColorUtils.barrier`.
+
 ## 0.1.2
 
 - Documented that apps must load/register font assets themselves while

@@ -23,7 +23,7 @@ dependencies:
   zam_ui:
     git:
       url: git@github.com:mikezamayias/zam_ui.git
-      ref: v0.1.2
+      ref: v0.1.3
 ```
 
 This package is intentionally marked with `publish_to: "none"` so it cannot be
@@ -86,6 +86,45 @@ typography: const ZamTypographyTokens(
   fontFamily: 'Inter',
   monoFontFamily: 'JetBrains Mono',
 ),
+```
+
+### Brand Presets
+
+Implement the `ZamPreset` interface to define type-safe brand configurations
+for your app:
+
+```dart
+class MyAppPreset implements ZamPreset {
+  const MyAppPreset();
+
+  @override
+  String get name => 'My App';
+
+  @override
+  ZamThemeData get light => ZamThemeData(
+    colors: ZamColorTokens.fromSeed(primary: brandColor),
+    typography: const ZamTypographyTokens(
+      fontFamily: 'Inter',
+      monoFontFamily: 'JetBrains Mono',
+    ),
+    icons: myIcons,
+  );
+
+  @override
+  ZamThemeData get dark => light;
+}
+```
+
+Then use the preset to configure `ZamApp`:
+
+```dart
+const preset = MyAppPreset();
+
+ZamApp.router(
+  theme: preset.light,
+  darkTheme: preset.dark,
+  routerConfig: router,
+);
 ```
 
 ## Verify

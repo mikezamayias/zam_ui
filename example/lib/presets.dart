@@ -17,20 +17,45 @@ const exampleIcons = ZamIconSet(
   chevronRight: chevronRightIcon,
 );
 
-final wellnessTheme = ZamThemeData(
-  colors: ZamColorTokens.fromSeed(primary: const Color(0xFF80CBC4)),
-  typography: const ZamTypographyTokens(
-    fontFamily: 'DM Sans',
-    monoFontFamily: 'JetBrains Mono',
-  ),
-  icons: exampleIcons,
-);
+class WellnessPreset implements ZamPreset {
+  const WellnessPreset();
 
-final fitnessTheme = ZamThemeData(
-  colors: ZamColorTokens.fromSeed(primary: const Color(0xFF06B6D4)),
-  typography: const ZamTypographyTokens(
-    fontFamily: 'Inter',
-    monoFontFamily: 'JetBrains Mono',
-  ),
-  icons: exampleIcons,
-);
+  @override
+  String get name => 'Healpen-style wellness';
+
+  @override
+  ZamThemeData get light => ZamThemeData(
+        colors: ZamColorTokens.fromSeed(primary: const Color(0xFF80CBC4)),
+        typography: const ZamTypographyTokens(
+          fontFamily: 'DM Sans',
+          monoFontFamily: 'JetBrains Mono',
+        ),
+        icons: exampleIcons,
+      );
+
+  @override
+  ZamThemeData get dark => light;
+}
+
+class FitnessPreset implements ZamPreset {
+  const FitnessPreset();
+
+  @override
+  String get name => 'Peakward-style fitness';
+
+  @override
+  ZamThemeData get light => ZamThemeData(
+        colors: ZamColorTokens.fromSeed(primary: const Color(0xFF06B6D4)),
+        typography: const ZamTypographyTokens(
+          fontFamily: 'Inter',
+          monoFontFamily: 'JetBrains Mono',
+        ),
+        icons: exampleIcons,
+      );
+
+  @override
+  ZamThemeData get dark => light;
+}
+
+const wellnessPreset = WellnessPreset();
+const fitnessPreset = FitnessPreset();
