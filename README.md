@@ -6,6 +6,34 @@ Private, app-agnostic Flutter UI foundation for cohesive Zam apps.
 small reusable UI primitives. Apps own their fonts, icon package, routing, state
 management, and brand presets.
 
+## Architecture
+
+`zam_ui` enforces a strict unidirectional dependency flow across modular layers. Higher layers depend only on lower layers, ensuring zero circular coupling:
+
+```mermaid
+graph TD
+    App["Consumer App (Zam App)"] -->|imports| PublicAPI["package:zam_ui/zam_ui.dart"]
+    
+    subgraph zam_ui ["zam_ui Package (lib/src/)"]
+        PublicAPI --> Components["components/ (UI Primitives & Adapters)"]
+        PublicAPI --> Theme["theme/ (Theme Adapters & Context)"]
+        PublicAPI --> Tokens["tokens/ (Color, Type, Spacing, Radius)"]
+        PublicAPI --> Utils["utils/ (Color & Geometry Calculations)"]
+        
+        Components --> Theme
+        Components --> Tokens
+        Theme --> Tokens
+        Theme --> Utils
+    end
+    
+    Components -->|Wraps & Type-Aliases| ShadCN["shadcn_ui package"]
+```
+
+- **Tokens (`lib/src/tokens/`)**: Pure configuration data contracts (`ZamColorTokens`, `ZamTypographyTokens`, `ZamSpacingTokens`, etc.) with zero widget dependencies.
+- **Theme (`lib/src/theme/`)**: Bridges design tokens to the widget tree (`ZamTheme`, `ZamThemeData`, `ZamPreset`) and adapts to `ShadThemeData`.
+- **Components (`lib/src/components/`)**: Visual UI primitives (`ZamButton`, `ZamSurface`, `ZamListTile`, `ZamFormField`, `ZamDialog`) and type-aliased shadcn widgets (`ZamCard`, `ZamInput`, `ZamTabs`).
+- **Utils (`lib/src/utils/`)**: Standalone mathematical color & geometry utilities (`ZamColorUtils`, `ZamOklchColor`).
+
 ## Install
 
 Local development:
