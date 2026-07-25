@@ -1,6 +1,8 @@
 # zam_ui
 
-[![CI](https://github.com/mikezamayias/zam_ui/actions/workflows/ci.yml/badge.svg)](https://github.com/mikezamayias/zam_ui/actions/workflows/ci.yml)
+[![ci](https://github.com/mikezamayias/zam_ui/actions/workflows/main.yaml/badge.svg)](https://github.com/mikezamayias/zam_ui/actions/workflows/main.yaml)
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+[![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 Private, app-agnostic Flutter UI foundation for cohesive Zam apps.
 
