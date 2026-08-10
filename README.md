@@ -1,6 +1,6 @@
 # zam_ui
 
-[![ci](https://github.com/mikezamayias/zam_ui/actions/workflows/main.yaml/badge.svg)](https://github.com/mikezamayias/zam_ui/actions/workflows/main.yaml)
+[![manual CI](https://github.com/mikezamayias/zam_ui/actions/workflows/main.yaml/badge.svg)](https://github.com/mikezamayias/zam_ui/actions/workflows/main.yaml)
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
 [![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
@@ -159,12 +159,37 @@ ZamApp.router(
 );
 ```
 
+## Continuous integration policy
+
+This public repository intentionally does not run automatic checks for pull requests.
+Its self-hosted workflow accepts only a manual dispatch of protected `main` and validates that default-branch commit, not pull-request code.
+Do not use a manual default-branch result as evidence that an open pull request was tested.
+
+Only the Captain initiates a run, and only after the intended repository changes have landed on protected `main`.
+The repository-scoped runner registration and default-branch protection are separate account prerequisites.
+The workflow has no inputs, persisted checkout credentials, secrets, deployment behavior, repository writes, cache publication, or artifact upload.
+
+The Captain's exact dispatch procedure is:
+
+1. Confirm the intended changes are already on protected `main` and that the separately registered runner has labels `self-hosted`, `macOS`, `ARM64`, and `zam-ui-manual`.
+2. In GitHub, open **Actions**, select **Manual self-hosted CI**, and choose **Run workflow**.
+3. Select `main` in the branch selector, leave the input-free form unchanged, and choose **Run workflow**.
+4. Confirm the run reports the expected `main` commit SHA and review every job result.
+
+The workflow rejects any other branch, unprotected default branch, non-default workflow source, or mismatched checkout before project commands run.
+
 ## Verify
 
+The authoritative SDK contract is [`.github/toolchain.json`](.github/toolchain.json).
+Verification fails before dependency resolution unless the selected Flutter SDK and its Flutter-owned Dart SDK match that contract exactly.
+
 ```bash
+ruby scripts/verify_toolchain.rb .github/toolchain.json
+ruby test/workflow_policy_test.rb
+flutter pub get
+dart format --output=none --set-exit-if-changed .
+flutter analyze
 dart run scripts/check_design_tokens.dart --self-test
 dart run scripts/check_design_tokens.dart
-dart format --set-exit-if-changed .
-flutter analyze
 flutter test
 ```
