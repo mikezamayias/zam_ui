@@ -45,10 +45,8 @@ class ZamSizeTokens {
   int get textPreviewLines => 1;
 
   /// Minimum tap target constraints (44x44px).
-  BoxConstraints get minTapTargetConstraints => BoxConstraints(
-        minHeight: minTapTarget,
-        minWidth: minTapTarget,
-      );
+  BoxConstraints get minTapTargetConstraints =>
+      BoxConstraints(minHeight: minTapTarget, minWidth: minTapTarget);
 
   /// Dialog layout constraints.
   BoxConstraints get dialogConstraints =>

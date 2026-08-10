@@ -52,16 +52,12 @@ class ZamInsetsTokens {
   EdgeInsets get dialog => EdgeInsets.all(spacing.twenty);
 
   /// Toast notification padding.
-  EdgeInsets get toast => EdgeInsets.symmetric(
-        horizontal: spacing.twelve,
-        vertical: spacing.eight,
-      );
+  EdgeInsets get toast =>
+      EdgeInsets.symmetric(horizontal: spacing.twelve, vertical: spacing.eight);
 
   /// Compact button padding.
-  EdgeInsets get buttonCompact => EdgeInsets.symmetric(
-        horizontal: spacing.twelve,
-        vertical: spacing.eight,
-      );
+  EdgeInsets get buttonCompact =>
+      EdgeInsets.symmetric(horizontal: spacing.twelve, vertical: spacing.eight);
 
   /// Large button padding.
   EdgeInsets get buttonLarge => EdgeInsets.symmetric(
@@ -70,10 +66,8 @@ class ZamInsetsTokens {
       );
 
   /// Bottom action bar padding.
-  EdgeInsets get bottomActionBar => EdgeInsets.symmetric(
-        horizontal: spacing.sixteen,
-        vertical: spacing.ten,
-      );
+  EdgeInsets get bottomActionBar =>
+      EdgeInsets.symmetric(horizontal: spacing.sixteen, vertical: spacing.ten);
 
   /// Returns [EdgeInsets.all] using a tokenized value.
   EdgeInsets all(double token) => EdgeInsets.all(token);

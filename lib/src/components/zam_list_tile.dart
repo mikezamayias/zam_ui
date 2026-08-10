@@ -66,10 +66,7 @@ class ZamListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  title,
-                  style: theme.typography.body(context),
-                ),
+                Text(title, style: theme.typography.body(context)),
                 if (subtitle != null) ...[
                   SizedBox(height: theme.spacing.two),
                   Text(

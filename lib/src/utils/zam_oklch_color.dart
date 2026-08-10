@@ -10,25 +10,13 @@ class ZamOklchColor {
   });
 
   /// Default warm OKLCH color benchmark.
-  static const warm = ZamOklchColor(
-    lightness: 0.57,
-    chroma: 0.110,
-    hue: 40,
-  );
+  static const warm = ZamOklchColor(lightness: 0.57, chroma: 0.110, hue: 40);
 
   /// Default neutral OKLCH color benchmark.
-  static const neutral = ZamOklchColor(
-    lightness: 0.47,
-    chroma: 0,
-    hue: 250,
-  );
+  static const neutral = ZamOklchColor(lightness: 0.47, chroma: 0, hue: 250);
 
   /// Default cool OKLCH color benchmark.
-  static const cool = ZamOklchColor(
-    lightness: 0.57,
-    chroma: 0.080,
-    hue: 160,
-  );
+  static const cool = ZamOklchColor(lightness: 0.57, chroma: 0.080, hue: 160);
 
   /// Perceptual lightness component (0.0 to 1.0).
   final double lightness;
@@ -71,10 +59,7 @@ class ZamOklchColor {
         scale(1),
       ];
 
-  ZamOklchColor _lerpTo(
-    ZamOklchColor b,
-    double t,
-  ) {
+  ZamOklchColor _lerpTo(ZamOklchColor b, double t) {
     return ZamOklchColor(
       lightness: _lerpDouble(lightness, b.lightness, t),
       chroma: _lerpDouble(chroma, b.chroma, t),

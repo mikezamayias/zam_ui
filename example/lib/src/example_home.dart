@@ -33,8 +33,9 @@ class ExampleHome extends StatelessWidget {
               onPressed: () => ZamToast.show(
                 context,
                 title: 'App-owned identity',
-                description:
-                    const Text('Colors, fonts, and icons come from the app.'),
+                description: const Text(
+                  'Colors, fonts, and icons come from the app.',
+                ),
               ),
             ),
           ),
@@ -65,16 +66,8 @@ class ExampleHome extends StatelessWidget {
                   spacing: theme.spacing.eight,
                   runSpacing: theme.spacing.eight,
                   children: [
-                    ZamFilterPill(
-                      label: 'Color',
-                      selected: true,
-                      onTap: () {},
-                    ),
-                    ZamFilterPill(
-                      label: 'Type',
-                      selected: false,
-                      onTap: () {},
-                    ),
+                    ZamFilterPill(label: 'Color', selected: true, onTap: () {}),
+                    ZamFilterPill(label: 'Type', selected: false, onTap: () {}),
                     ZamFilterPill(
                       label: 'Motion',
                       selected: false,

@@ -186,10 +186,11 @@ Verification fails before dependency resolution unless the selected Flutter SDK 
 ```bash
 ruby scripts/verify_toolchain.rb .github/toolchain.json
 ruby test/workflow_policy_test.rb
+actionlint .github/workflows/main.yaml
 flutter pub get
 dart format --output=none --set-exit-if-changed .
 flutter analyze
 dart run scripts/check_design_tokens.dart --self-test
 dart run scripts/check_design_tokens.dart
-flutter test
+flutter test --coverage
 ```

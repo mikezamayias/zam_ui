@@ -3,11 +3,7 @@ part of '../theme.dart';
 /// InheritedWidget providing [ZamThemeData] to descendant widgets in the widget tree.
 class ZamTheme extends InheritedWidget {
   /// Creates a [ZamTheme] providing [data] to descendant widgets.
-  const ZamTheme({
-    required this.data,
-    required super.child,
-    super.key,
-  });
+  const ZamTheme({required this.data, required super.child, super.key});
 
   /// The active design system theme configuration.
   final ZamThemeData data;
