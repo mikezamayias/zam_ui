@@ -114,11 +114,18 @@ jobs:
       - name: Clean isolated runtime
         if: ${{ always() }}
         shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
         run: |
           set -euo pipefail
-          case "$ZAM_CI_ROOT" in
+          expected_root="$RUNNER_TEMP/zam-ui-manual-$RUN_ID-$RUN_ATTEMPT"
+          cleanup_root="${ZAM_CI_ROOT:-$expected_root}"
+          test -n "$cleanup_root"
+          test "$cleanup_root" = "$expected_root"
+          case "$cleanup_root" in
             "$RUNNER_TEMP"/zam-ui-manual-*) ;;
             *) echo "Refusing unsafe cleanup path." >&2; exit 1 ;;
           esac
-          test ! -L "$ZAM_CI_ROOT"
-          rm -rf -- "$ZAM_CI_ROOT" .dart_tool build coverage pubspec.lock
+          test ! -L "$cleanup_root"
+          rm -rf -- "$cleanup_root" .dart_tool build coverage pubspec.lock

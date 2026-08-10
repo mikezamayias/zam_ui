@@ -56,7 +56,9 @@ module WorkflowPolicy
       install_index = steps.each_index.find { |index| steps[index]["name"] == "Resolve dependencies" }
       toolchain_index = steps.each_index.find { |index| steps[index]["name"] == "Verify exact toolchain" }
       failures << "exact toolchain verification must run before dependency installation" unless toolchain_index && install_index && toolchain_index < install_index
-      failures << "cleanup must always run" unless steps.any? { |step| step["name"] == "Clean isolated runtime" && step["if"] == "${{ always() }}" }
+      cleanup_steps = steps.select { |step| step["name"] == "Clean isolated runtime" }
+      failures << "cleanup must always run" unless cleanup_steps.one? && cleanup_steps.first["if"] == "${{ always() }}"
+      failures << "cleanup must derive and validate the runtime path independently" unless cleanup_runtime_guard?(cleanup_steps.first)
     end
 
     walk(workflow) do |key, value|
@@ -88,6 +90,22 @@ module WorkflowPolicy
 
   def checkout_identity_guard?(step)
     step.is_a?(Hash) && step.dig("env", "EVENT_SHA") == "${{ github.sha }}" && step["run"].to_s.include?("git rev-parse HEAD")
+  end
+
+  def cleanup_runtime_guard?(step)
+    return false unless step.is_a?(Hash)
+
+    env = step.fetch("env", {})
+    run = step["run"].to_s
+    env == {
+      "RUN_ID" => "${{ github.run_id }}",
+      "RUN_ATTEMPT" => "${{ github.run_attempt }}"
+    } && run.include?('expected_root="$RUNNER_TEMP/zam-ui-manual-$RUN_ID-$RUN_ATTEMPT"') &&
+      run.include?('cleanup_root="${ZAM_CI_ROOT:-$expected_root}"') &&
+      run.include?('test -n "$cleanup_root"') &&
+      run.include?('test "$cleanup_root" = "$expected_root"') &&
+      run.include?('test ! -L "$cleanup_root"') &&
+      run.include?('rm -rf -- "$cleanup_root" .dart_tool build coverage pubspec.lock')
   end
 
   def walk(value, key = nil, &block)

@@ -80,6 +80,12 @@ class WorkflowPolicyTest < Minitest::Test
     assert_policy_error upload, "artifact upload"
   end
 
+  def test_requires_cleanup_fallback_when_setup_did_not_export_root
+    workflow = copy
+    cleanup(workflow)["run"] = cleanup(workflow)["run"].sub('${ZAM_CI_ROOT:-$expected_root}', '$ZAM_CI_ROOT')
+    assert_policy_error workflow, "cleanup must derive and validate the runtime path independently"
+  end
+
   private
 
   def copy
@@ -96,6 +102,10 @@ class WorkflowPolicyTest < Minitest::Test
 
   def source_guard(workflow)
     verify_job(workflow).fetch("steps").find { |step| step["name"] == "Assert protected default-branch event" }
+  end
+
+  def cleanup(workflow)
+    verify_job(workflow).fetch("steps").find { |step| step["name"] == "Clean isolated runtime" }
   end
 
   def assert_policy_error(workflow, fragment)
