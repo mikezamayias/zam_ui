@@ -88,10 +88,7 @@ class ZamColorTokens {
   final Color transparent;
 
   /// Returns the corresponding [ZamSurfaceColors] for a given [brightness] and optional [isOled] mode.
-  ZamSurfaceColors forBrightness(
-    Brightness brightness, {
-    bool isOled = false,
-  }) {
+  ZamSurfaceColors forBrightness(Brightness brightness, {bool isOled = false}) {
     if (brightness == Brightness.light) return light;
     return isOled ? oled : dark;
   }

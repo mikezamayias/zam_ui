@@ -37,8 +37,9 @@ class ZamFilterPill extends StatelessWidget {
             decoration: BoxDecoration(
               color: selected ? scheme.secondary : theme.colors.transparent,
               borderRadius: theme.radius.pill,
-              border:
-                  Border.fromBorderSide(theme.strokes.border(scheme.border)),
+              border: Border.fromBorderSide(
+                theme.strokes.border(scheme.border),
+              ),
             ),
             child: Padding(
               padding: theme.insets.symmetric(
@@ -47,8 +48,10 @@ class ZamFilterPill extends StatelessWidget {
               ),
               child: Text(
                 label,
-                style:
-                    theme.typography.label(context, color: scheme.foreground),
+                style: theme.typography.label(
+                  context,
+                  color: scheme.foreground,
+                ),
               ),
             ),
           ),

@@ -39,10 +39,7 @@ class ZamFormField extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              label,
-              style: theme.typography.label(context),
-            ),
+            Text(label, style: theme.typography.label(context)),
             if (isRequired) ...[
               SizedBox(width: theme.spacing.two),
               Text(
@@ -71,10 +68,7 @@ class ZamFormField extends StatelessWidget {
           SizedBox(height: theme.spacing.four),
           Text(
             error!,
-            style: theme.typography.caption(
-              context,
-              color: scheme.destructive,
-            ),
+            style: theme.typography.caption(context, color: scheme.destructive),
           ),
         ],
       ],

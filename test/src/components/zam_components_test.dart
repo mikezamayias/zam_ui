@@ -12,10 +12,7 @@ void main() {
       var pressed = false;
 
       await tester.pumpApp(
-        ZamButton(
-          label: 'Continue',
-          onPressed: () => pressed = true,
-        ),
+        ZamButton(label: 'Continue', onPressed: () => pressed = true),
       );
 
       expect(find.text('Continue'), findsOneWidget);
@@ -25,10 +22,7 @@ void main() {
 
     testWidgets('maps link buttons to the shad link variant', (tester) async {
       await tester.pumpApp(
-        ZamButton.link(
-          label: 'Learn more',
-          onPressed: () {},
-        ),
+        ZamButton.link(label: 'Learn more', onPressed: () {}),
       );
 
       final button = tester.widget<ShadButton>(find.byType(ShadButton));
@@ -36,12 +30,7 @@ void main() {
     });
 
     testWidgets('keeps callback-less buttons disabled', (tester) async {
-      await tester.pumpApp(
-        const ZamButton(
-          label: 'No-op',
-          enabled: true,
-        ),
-      );
+      await tester.pumpApp(const ZamButton(label: 'No-op', enabled: true));
 
       final button = tester.widget<ShadButton>(find.byType(ShadButton));
       expect(button.enabled, isFalse);
@@ -49,10 +38,7 @@ void main() {
     });
 
     testWidgets('requires button content', (tester) async {
-      expect(
-        ZamButton.new,
-        throwsA(isA<AssertionError>()),
-      );
+      expect(ZamButton.new, throwsA(isA<AssertionError>()));
     });
   });
 
@@ -70,11 +56,7 @@ void main() {
   group('ZamSurface & Screen', () {
     testWidgets('renders themed surface inside screen', (tester) async {
       await tester.pumpApp(
-        const ZamScreen(
-          child: ZamSurface(
-            child: Text('Dashboard Content'),
-          ),
-        ),
+        const ZamScreen(child: ZamSurface(child: Text('Dashboard Content'))),
       );
 
       expect(find.text('Dashboard Content'), findsOneWidget);
@@ -119,9 +101,7 @@ void main() {
   group('ZamSkeleton', () {
     testWidgets('renders skeleton placeholders while loading', (tester) async {
       await tester.pumpApp(
-        const ZamSkeleton(
-          child: SizedBox(width: 80, height: 16),
-        ),
+        const ZamSkeleton(child: SizedBox(width: 80, height: 16)),
       );
 
       expect(find.byType(ZamSkeleton), findsOneWidget);
@@ -143,13 +123,7 @@ void main() {
       await tester.pumpApp(
         const SizedBox(
           height: 100,
-          child: Row(
-            children: [
-              Text('A'),
-              ZamDivider.vertical(),
-              Text('B'),
-            ],
-          ),
+          child: Row(children: [Text('A'), ZamDivider.vertical(), Text('B')]),
         ),
       );
 
@@ -224,10 +198,7 @@ void main() {
   group('ZamFormField', () {
     testWidgets('renders label and child', (tester) async {
       await tester.pumpApp(
-        const ZamFormField(
-          label: 'Email',
-          child: ZamInput(),
-        ),
+        const ZamFormField(label: 'Email', child: ZamInput()),
       );
 
       expect(find.text('Email'), findsOneWidget);
@@ -281,10 +252,7 @@ void main() {
       tester,
     ) async {
       await tester.pumpApp(
-        const ZamFormField(
-          label: 'Notes',
-          child: ZamInput(),
-        ),
+        const ZamFormField(label: 'Notes', child: ZamInput()),
       );
 
       expect(find.text('*'), findsNothing);

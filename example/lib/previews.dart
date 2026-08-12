@@ -17,9 +17,8 @@ Widget _themed(Widget child) {
 // -- Buttons --
 
 @Preview(name: 'Primary', group: 'Buttons')
-Widget primaryButtonPreview() => _themed(
-      ZamButton(label: 'Label', onPressed: () {}),
-    );
+Widget primaryButtonPreview() =>
+    _themed(ZamButton(label: 'Label', onPressed: () {}));
 
 @Preview(name: 'Secondary', group: 'Buttons')
 Widget secondaryButtonPreview() => _themed(
@@ -69,9 +68,8 @@ Widget iconButtonPreview() => _themed(
 // -- Containers --
 
 @Preview(name: 'Surface (Flat)', group: 'Containers')
-Widget surfaceFlatPreview() => _themed(
-      const ZamSurface(child: Text('Surface content')),
-    );
+Widget surfaceFlatPreview() =>
+    _themed(const ZamSurface(child: Text('Surface content')));
 
 @Preview(name: 'Surface (Elevated)', group: 'Containers')
 Widget surfaceElevatedPreview() => _themed(
@@ -89,31 +87,24 @@ Widget screenHeaderPreview() => _themed(
     );
 
 @Preview(name: 'Section Header', group: 'Layout')
-Widget sectionHeaderPreview() => _themed(
-      const ZamSectionHeader(
-        title: 'Section',
-        subtitle: 'Description',
-      ),
-    );
+Widget sectionHeaderPreview() =>
+    _themed(const ZamSectionHeader(title: 'Section', subtitle: 'Description'));
 
 // -- Data --
 
 @Preview(name: 'Stat Tile', group: 'Data')
-Widget statTilePreview() => _themed(
-      const ZamStatTile(label: 'USERS', value: '1,234'),
-    );
+Widget statTilePreview() =>
+    _themed(const ZamStatTile(label: 'USERS', value: '1,234'));
 
 // -- Inputs --
 
 @Preview(name: 'Filter Pill (Selected)', group: 'Inputs')
-Widget filterPillSelectedPreview() => _themed(
-      ZamFilterPill(label: 'Active', selected: true, onTap: () {}),
-    );
+Widget filterPillSelectedPreview() =>
+    _themed(ZamFilterPill(label: 'Active', selected: true, onTap: () {}));
 
 @Preview(name: 'Filter Pill (Unselected)', group: 'Inputs')
-Widget filterPillUnselectedPreview() => _themed(
-      ZamFilterPill(label: 'Active', selected: false, onTap: () {}),
-    );
+Widget filterPillUnselectedPreview() =>
+    _themed(ZamFilterPill(label: 'Active', selected: false, onTap: () {}));
 
 // -- Feedback --
 
@@ -127,11 +118,8 @@ Widget emptyStatePreview() => _themed(
     );
 
 @Preview(name: 'Skeleton', group: 'Feedback', size: Size(300, 100))
-Widget skeletonPreview() => _themed(
-      const ZamSkeleton(
-        child: SizedBox.expand(),
-      ),
-    );
+Widget skeletonPreview() =>
+    _themed(const ZamSkeleton(child: SizedBox.expand()));
 
 @Preview(name: 'Toast Content', group: 'Feedback')
 Widget toastContentPreview() => _themed(
@@ -153,11 +141,7 @@ Widget dividerPreview() => _themed(
         padding: wellnessPreset.light.insets.card,
         child: const Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Above'),
-            ZamDivider(),
-            Text('Below'),
-          ],
+          children: [Text('Above'), ZamDivider(), Text('Below')],
         ),
       ),
     );

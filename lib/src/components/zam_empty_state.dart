@@ -41,8 +41,10 @@ class ZamEmptyState extends StatelessWidget {
               width: theme.sizes.emptyIconContainer,
               height: theme.sizes.emptyIconContainer,
               decoration: BoxDecoration(
-                color:
-                    theme.opacities.apply(scheme.primary, theme.opacities.tint),
+                color: theme.opacities.apply(
+                  scheme.primary,
+                  theme.opacities.tint,
+                ),
                 borderRadius: theme.radius.dialog,
               ),
               child: Icon(
@@ -62,8 +64,9 @@ class ZamEmptyState extends StatelessWidget {
             ),
             SizedBox(height: theme.spacing.six),
             ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxWidth: theme.sizes.emptyMessageWidth),
+              constraints: BoxConstraints(
+                maxWidth: theme.sizes.emptyMessageWidth,
+              ),
               child: Text(
                 message,
                 style: theme.typography
