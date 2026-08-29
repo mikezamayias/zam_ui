@@ -14,6 +14,7 @@ part 'components/zam_empty_state.dart';
 part 'components/zam_stat_tile.dart';
 part 'components/zam_filter_pill.dart';
 part 'components/zam_button.dart';
+part 'components/zam_async_button.dart';
 part 'components/zam_icon_button.dart';
 part 'components/zam_dialog.dart';
 part 'components/zam_toast_content.dart';
