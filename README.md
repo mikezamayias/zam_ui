@@ -4,7 +4,7 @@
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
 [![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-Private, app-agnostic Flutter UI foundation for cohesive Zam apps.
+App-agnostic Flutter UI foundation for cohesive Zam apps.
 
 `zam_ui` provides configurable design tokens, shadcn theme generation, and
 small reusable UI primitives. Apps own their fonts, icon package, routing, state
@@ -48,7 +48,7 @@ dependency_overrides:
     path: ../zam_ui
 ```
 
-Private git dependency:
+Git dependency:
 
 ```yaml
 dependencies:
