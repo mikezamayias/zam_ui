@@ -153,63 +153,102 @@ class ZamButton extends StatelessWidget {
     };
 
     final overrides = style ?? const ZamButtonStyle();
-    assert(
-      label != null || !overrides.hasDisabledColors,
-      'ZamButton needs a label to draw disabled colors, so a screen reader '
-      'hears it as disabled.',
-    );
-    // With a disabled color set, ShadButton stays enabled so it skips its
-    // 50% fade; the pointer, focus, and semantics are disabled here instead.
-    final drawsDisabledColors =
-        !effectiveEnabled && overrides.hasDisabledColors;
-    final fill = drawsDisabledColors
-        ? overrides.disabledBackgroundColor ?? overrides.backgroundColor
-        : overrides.backgroundColor;
+    final shadTheme = ShadTheme.of(context);
+    final buttonTheme = switch (variant) {
+      ZamButtonVariant.primary => shadTheme.primaryButtonTheme,
+      ZamButtonVariant.secondary => shadTheme.secondaryButtonTheme,
+      ZamButtonVariant.outline => shadTheme.outlineButtonTheme,
+      ZamButtonVariant.ghost => shadTheme.ghostButtonTheme,
+      ZamButtonVariant.destructive => shadTheme.destructiveButtonTheme,
+      ZamButtonVariant.link => shadTheme.linkButtonTheme,
+    };
+
+    // A debug hint that does not stop the build, so debug and release draw
+    // the same fallback: the 50% fade with ShadButton's disabled node.
+    if (kDebugMode && label == null && overrides.hasDisabledColors) {
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: FlutterError(
+            'ZamButton needs a label to draw disabled colors, so a screen '
+            'reader hears it as disabled. Without one it fades to 50% '
+            'instead.',
+          ),
+          library: 'zam_ui',
+        ),
+      );
+    }
+
+    // With disabled colors, a disabled or loading labeled button keeps
+    // ShadButton enabled so it skips the 50% fade, and disables the pointer,
+    // focus, and semantics here instead. Loading keeps the default colors.
+    final keepsFullOpacity =
+        label != null && !effectiveEnabled && overrides.hasDisabledColors;
+    final drawsDisabledColors = keepsFullOpacity && !isLoading;
     final foreground = drawsDisabledColors
         ? overrides.disabledForegroundColor ?? overrides.foregroundColor
         : overrides.foregroundColor;
+    final overridesColors =
+        overrides.backgroundColor != null || foreground != null;
+    // With a color override, hover and press keep the resting fill unless a
+    // pressed fill is given, so an override label never lands on a theme
+    // hover fill (ghost and outline hover to the primary color).
+    final restingFill = (drawsDisabledColors
+            ? overrides.disabledBackgroundColor ?? overrides.backgroundColor
+            : overrides.backgroundColor) ??
+        (overridesColors
+            ? buttonTheme.backgroundColor ?? theme.colors.transparent
+            : null);
+    final pressedFill = drawsDisabledColors
+        ? restingFill
+        : overrides.pressedBackgroundColor ??
+            (overridesColors ? restingFill : null);
+    final textStyle = overrides.textStyle == null
+        ? null
+        : (buttonTheme.textStyle ?? shadTheme.textTheme.small)
+            .merge(overrides.textStyle);
     final radius = overrides.radius;
-    final focusRing = ShadTheme.of(context).decoration.secondaryFocusedBorder;
+    final focusRing = shadTheme.decoration
+        .merge(buttonTheme.decoration)
+        .secondaryFocusedBorder;
 
-    Widget button = ShadButton.raw(
-      variant: shadVariant,
-      size: shadSize,
-      enabled: effectiveEnabled || drawsDisabledColors,
-      canRequestFocus: effectiveEnabled,
-      onPressed: effectiveEnabled ? onPressed : null,
-      leading: isLoading ? const _ZamLoadingDot() : leading,
-      trailing: trailing,
-      width: isExpanded ? double.infinity : width,
-      height: height ?? theme.sizes.buttonLargeHeight,
-      padding: padding,
-      gap: theme.spacing.eight,
-      backgroundColor: fill,
-      hoverBackgroundColor: fill,
-      pressedBackgroundColor:
-          drawsDisabledColors ? fill : overrides.pressedBackgroundColor,
-      foregroundColor: foreground,
-      hoverForegroundColor: foreground,
-      pressedForegroundColor: foreground,
-      textStyle: overrides.textStyle,
-      decoration: radius == null
-          ? null
-          : ShadDecoration(
-              border: ShadBorder(radius: radius),
-              secondaryFocusedBorder: focusRing?.copyWith(
-                radius:
-                    radius.add(BorderRadius.circular(focusRing.offset ?? 0)),
+    final button = IgnorePointer(
+      ignoring: keepsFullOpacity,
+      child: ShadButton.raw(
+        variant: shadVariant,
+        size: shadSize,
+        enabled: effectiveEnabled || keepsFullOpacity,
+        canRequestFocus: effectiveEnabled,
+        onPressed: effectiveEnabled ? onPressed : null,
+        leading: isLoading ? const _ZamLoadingDot() : leading,
+        trailing: trailing,
+        width: isExpanded ? double.infinity : width,
+        height: height ?? theme.sizes.buttonLargeHeight,
+        padding: padding,
+        gap: theme.spacing.eight,
+        backgroundColor: restingFill,
+        hoverBackgroundColor: overridesColors ? restingFill : null,
+        pressedBackgroundColor: pressedFill,
+        foregroundColor: foreground,
+        hoverForegroundColor: foreground,
+        pressedForegroundColor: foreground,
+        textStyle: textStyle,
+        decoration: radius == null
+            ? null
+            : ShadDecoration(
+                border: ShadBorder(radius: radius),
+                secondaryFocusedBorder: focusRing?.copyWith(
+                  radius: radius.add(
+                    BorderRadius.circular(focusRing.offset ?? 0),
+                  ),
+                ),
               ),
-            ),
-      child: child ?? Text(effectiveLabel),
+        child: child ?? Text(effectiveLabel),
+      ),
     );
 
-    if (drawsDisabledColors) {
-      button = IgnorePointer(child: button);
-    }
-
     // Without a label, ShadButton's own container node reads the child.
-    // Disabled colors need a label (asserted above), because that node
-    // would report enabled while ShadButton stays enabled to draw them.
+    // Disabled colors need a label, because that node would report enabled
+    // while ShadButton stays enabled to draw them.
     if (label == null) return button;
 
     // With a label, this container replaces ShadButton's node, so a screen

@@ -3,6 +3,11 @@ part of '../components.dart';
 /// Style overrides for a [ZamButton].
 ///
 /// Every field left null keeps the variant's theme value.
+///
+/// When [backgroundColor] or [foregroundColor] is set, hover and press keep
+/// the resting fill (the given fill, else the variant's fill, else none)
+/// unless [pressedBackgroundColor] is set, so an override label never lands
+/// on a theme hover fill.
 @immutable
 class ZamButtonStyle {
   /// Creates a [ZamButtonStyle].
@@ -16,25 +21,29 @@ class ZamButtonStyle {
     this.textStyle,
   });
 
-  /// Fill in the default, hovered, and focused states.
+  /// Fill in the default, hovered, and focused states, and while pressed
+  /// unless [pressedBackgroundColor] is set.
   final Color? backgroundColor;
 
   /// Label and icon color in the default, hovered, and pressed states.
   final Color? foregroundColor;
 
-  /// Fill while pressed, such as the fill with a state layer composited.
+  /// Fill while pressed, such as the resting fill with a state layer
+  /// composited.
   final Color? pressedBackgroundColor;
 
   /// Fill while disabled.
   ///
   /// When this or [disabledForegroundColor] is set, a disabled button with a
-  /// label draws the disabled colors at full opacity instead of fading to 50%.
+  /// [ZamButton.label] draws the disabled colors at full opacity instead of
+  /// fading to 50%, and a loading one keeps its default colors at full
+  /// opacity. A button without a label ignores the disabled colors and fades,
+  /// because its semantics would otherwise report it as enabled.
   final Color? disabledBackgroundColor;
 
   /// Label and icon color while disabled.
   ///
-  /// When this or [disabledBackgroundColor] is set, a disabled button with a
-  /// label draws the disabled colors at full opacity instead of fading to 50%.
+  /// See [disabledBackgroundColor] for when the disabled colors apply.
   final Color? disabledForegroundColor;
 
   /// Corner radius, such as a pill. The focus ring follows it.
