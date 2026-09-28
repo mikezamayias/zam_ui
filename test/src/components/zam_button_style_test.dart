@@ -11,51 +11,34 @@ const _pressedFill = Color(0xFF1A5DA1);
 const _disabledFill = Color(0xFFE4EBF3);
 const _disabledLabel = Color(0xFF5B6675);
 
+const _disabledColors = ZamButtonStyle(
+  backgroundColor: _fill,
+  foregroundColor: _label,
+  disabledBackgroundColor: _disabledFill,
+  disabledForegroundColor: _disabledLabel,
+);
+
 ZamButton _labeled({
   VoidCallback? onPressed,
   bool? enabled,
-  Color? backgroundColor,
-  Color? foregroundColor,
-  Color? pressedBackgroundColor,
-  Color? disabledBackgroundColor,
-  Color? disabledForegroundColor,
-  BorderRadius? borderRadius,
-  TextStyle? textStyle,
+  ZamButtonStyle? style,
 }) =>
     ZamButton(
       label: 'Save',
       onPressed: onPressed,
       enabled: enabled,
-      backgroundColor: backgroundColor,
-      foregroundColor: foregroundColor,
-      pressedBackgroundColor: pressedBackgroundColor,
-      disabledBackgroundColor: disabledBackgroundColor,
-      disabledForegroundColor: disabledForegroundColor,
-      borderRadius: borderRadius,
-      textStyle: textStyle,
+      style: style,
     );
 
 ZamButton _childOnly({
   VoidCallback? onPressed,
   bool? enabled,
-  Color? backgroundColor,
-  Color? foregroundColor,
-  Color? pressedBackgroundColor,
-  Color? disabledBackgroundColor,
-  Color? disabledForegroundColor,
-  BorderRadius? borderRadius,
-  TextStyle? textStyle,
+  ZamButtonStyle? style,
 }) =>
     ZamButton(
       onPressed: onPressed,
       enabled: enabled,
-      backgroundColor: backgroundColor,
-      foregroundColor: foregroundColor,
-      pressedBackgroundColor: pressedBackgroundColor,
-      disabledBackgroundColor: disabledBackgroundColor,
-      disabledForegroundColor: disabledForegroundColor,
-      borderRadius: borderRadius,
-      textStyle: textStyle,
+      style: style,
       child: const Text('Save'),
     );
 
@@ -104,8 +87,10 @@ void main() {
         await tester.pumpApp(
           build(
             onPressed: () {},
-            backgroundColor: _fill,
-            foregroundColor: _label,
+            style: const ZamButtonStyle(
+              backgroundColor: _fill,
+              foregroundColor: _label,
+            ),
           ),
         );
 
@@ -117,9 +102,11 @@ void main() {
         await tester.pumpApp(
           build(
             onPressed: () {},
-            backgroundColor: _fill,
-            foregroundColor: _label,
-            pressedBackgroundColor: _pressedFill,
+            style: const ZamButtonStyle(
+              backgroundColor: _fill,
+              foregroundColor: _label,
+              pressedBackgroundColor: _pressedFill,
+            ),
           ),
         );
 
@@ -143,11 +130,13 @@ void main() {
         await tester.pumpApp(
           build(
             onPressed: () {},
-            foregroundColor: _label,
-            borderRadius: radius,
-            textStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            style: ZamButtonStyle(
+              foregroundColor: _label,
+              radius: radius,
+              textStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         );
@@ -157,7 +146,7 @@ void main() {
         final ring = decoration.secondaryFocusedBorder!;
         expect(
           ring.radius,
-          radius + BorderRadius.circular(ring.offset ?? 0),
+          radius.add(BorderRadius.circular(ring.offset ?? 0)),
         );
 
         final style = _labelStyle(tester);
@@ -181,7 +170,7 @@ void main() {
 
   group('disabled colors', () {
     testWidgets(
-      'draws disabled colors at full opacity as one disabled node',
+      'draw at full opacity as one disabled node',
       (tester) async {
         final handle = tester.ensureSemantics();
         var taps = 0;
@@ -189,10 +178,7 @@ void main() {
           _labeled(
             onPressed: () => taps++,
             enabled: false,
-            backgroundColor: _fill,
-            foregroundColor: _label,
-            disabledBackgroundColor: _disabledFill,
-            disabledForegroundColor: _disabledLabel,
+            style: _disabledColors,
           ),
         );
 
@@ -219,14 +205,55 @@ void main() {
       },
     );
 
-    test('need a label', () {
-      expect(
-        () => _childOnly(disabledBackgroundColor: _disabledFill),
-        throwsAssertionError,
+    testWidgets('need a label', (tester) async {
+      await tester.pumpApp(_childOnly(style: _disabledColors));
+
+      expect(tester.takeException(), isAssertionError);
+    });
+  });
+
+  group('ZamButtonStyle', () {
+    test('compares by value', () {
+      // copyWith builds a new instance, so this is not const identity.
+      final style = const ZamButtonStyle(backgroundColor: _fill).copyWith(
+        radius: BorderRadius.circular(24),
+      );
+      final same = ZamButtonStyle(
+        backgroundColor: _fill,
+        radius: BorderRadius.circular(24),
+      );
+      expect(identical(style, same), isFalse);
+      expect(style, same);
+      expect(style.hashCode, same.hashCode);
+      expect(style, isNot(same.copyWith(backgroundColor: _label)));
+    });
+
+    test('copyWith replaces only the given fields', () {
+      const style = ZamButtonStyle(
+        backgroundColor: _fill,
+        foregroundColor: _label,
       );
       expect(
-        () => _childOnly(disabledForegroundColor: _disabledLabel),
-        throwsAssertionError,
+        style.copyWith(foregroundColor: _disabledLabel),
+        const ZamButtonStyle(
+          backgroundColor: _fill,
+          foregroundColor: _disabledLabel,
+        ),
+      );
+      expect(style.copyWith(), style);
+    });
+
+    test('reports whether a disabled color is set', () {
+      expect(const ZamButtonStyle().hasDisabledColors, isFalse);
+      expect(
+        const ZamButtonStyle(disabledForegroundColor: _disabledLabel)
+            .hasDisabledColors,
+        isTrue,
+      );
+      expect(
+        const ZamButtonStyle(disabledBackgroundColor: _disabledFill)
+            .hasDisabledColors,
+        isTrue,
       );
     });
   });

@@ -18,23 +18,10 @@ class ZamButton extends StatelessWidget {
     this.width,
     this.height,
     this.padding,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.pressedBackgroundColor,
-    this.disabledBackgroundColor,
-    this.disabledForegroundColor,
-    this.borderRadius,
-    this.textStyle,
-  })  : assert(
+    this.style,
+  }) : assert(
           label != null || child != null,
           'ZamButton requires either label or child.',
-        ),
-        assert(
-          label != null ||
-              (disabledBackgroundColor == null &&
-                  disabledForegroundColor == null),
-          'ZamButton needs a label to draw disabled colors, so a screen reader '
-          'hears it as disabled.',
         );
 
   /// Creates an outlined variant [ZamButton].
@@ -52,23 +39,10 @@ class ZamButton extends StatelessWidget {
     this.width,
     this.height,
     this.padding,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.pressedBackgroundColor,
-    this.disabledBackgroundColor,
-    this.disabledForegroundColor,
-    this.borderRadius,
-    this.textStyle,
+    this.style,
   })  : assert(
           label != null || child != null,
           'ZamButton.outline requires either label or child.',
-        ),
-        assert(
-          label != null ||
-              (disabledBackgroundColor == null &&
-                  disabledForegroundColor == null),
-          'ZamButton.outline needs a label to draw disabled colors, so a screen '
-          'reader hears it as disabled.',
         ),
         variant = ZamButtonVariant.outline;
 
@@ -87,23 +61,10 @@ class ZamButton extends StatelessWidget {
     this.width,
     this.height,
     this.padding,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.pressedBackgroundColor,
-    this.disabledBackgroundColor,
-    this.disabledForegroundColor,
-    this.borderRadius,
-    this.textStyle,
+    this.style,
   })  : assert(
           label != null || child != null,
           'ZamButton.destructive requires either label or child.',
-        ),
-        assert(
-          label != null ||
-              (disabledBackgroundColor == null &&
-                  disabledForegroundColor == null),
-          'ZamButton.destructive needs a label to draw disabled colors, so a screen '
-          'reader hears it as disabled.',
         ),
         variant = ZamButtonVariant.destructive;
 
@@ -122,23 +83,10 @@ class ZamButton extends StatelessWidget {
     this.width,
     this.height,
     this.padding,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.pressedBackgroundColor,
-    this.disabledBackgroundColor,
-    this.disabledForegroundColor,
-    this.borderRadius,
-    this.textStyle,
+    this.style,
   })  : assert(
           label != null || child != null,
           'ZamButton.link requires either label or child.',
-        ),
-        assert(
-          label != null ||
-              (disabledBackgroundColor == null &&
-                  disabledForegroundColor == null),
-          'ZamButton.link needs a label to draw disabled colors, so a screen '
-          'reader hears it as disabled.',
         ),
         variant = ZamButtonVariant.link;
 
@@ -181,34 +129,8 @@ class ZamButton extends StatelessWidget {
   /// Custom padding.
   final EdgeInsetsGeometry? padding;
 
-  /// Fill in the default, hovered, and focused states.
-  final Color? backgroundColor;
-
-  /// Label and icon color in the default, hovered, and pressed states.
-  final Color? foregroundColor;
-
-  /// Fill while pressed, such as the fill with a state layer composited.
-  final Color? pressedBackgroundColor;
-
-  /// Fill while disabled.
-  ///
-  /// When this or [disabledForegroundColor] is set, a disabled button draws
-  /// the disabled colors at full opacity instead of fading to 50%, and it
-  /// needs a [label].
-  final Color? disabledBackgroundColor;
-
-  /// Label and icon color while disabled.
-  ///
-  /// When this or [disabledBackgroundColor] is set, a disabled button draws
-  /// the disabled colors at full opacity instead of fading to 50%, and it
-  /// needs a [label].
-  final Color? disabledForegroundColor;
-
-  /// Corner radius, such as a pill. The focus ring follows it.
-  final BorderRadius? borderRadius;
-
-  /// Label style; the foreground color still applies on top of it.
-  final TextStyle? textStyle;
+  /// Style overrides; null keeps the variant's theme look.
+  final ZamButtonStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -230,17 +152,23 @@ class ZamButton extends StatelessWidget {
       ZamButtonSize.large || ZamButtonSize.lg => ShadButtonSize.lg,
     };
 
+    final overrides = style ?? const ZamButtonStyle();
+    assert(
+      label != null || !overrides.hasDisabledColors,
+      'ZamButton needs a label to draw disabled colors, so a screen reader '
+      'hears it as disabled.',
+    );
     // With a disabled color set, ShadButton stays enabled so it skips its
     // 50% fade; the pointer, focus, and semantics are disabled here instead.
-    final drawsDisabledColors = !effectiveEnabled &&
-        (disabledBackgroundColor != null || disabledForegroundColor != null);
+    final drawsDisabledColors =
+        !effectiveEnabled && overrides.hasDisabledColors;
     final fill = drawsDisabledColors
-        ? disabledBackgroundColor ?? backgroundColor
-        : backgroundColor;
+        ? overrides.disabledBackgroundColor ?? overrides.backgroundColor
+        : overrides.backgroundColor;
     final foreground = drawsDisabledColors
-        ? disabledForegroundColor ?? foregroundColor
-        : foregroundColor;
-    final radius = borderRadius;
+        ? overrides.disabledForegroundColor ?? overrides.foregroundColor
+        : overrides.foregroundColor;
+    final radius = overrides.radius;
     final focusRing = ShadTheme.of(context).decoration.secondaryFocusedBorder;
 
     Widget button = ShadButton.raw(
@@ -258,17 +186,18 @@ class ZamButton extends StatelessWidget {
       backgroundColor: fill,
       hoverBackgroundColor: fill,
       pressedBackgroundColor:
-          drawsDisabledColors ? fill : pressedBackgroundColor,
+          drawsDisabledColors ? fill : overrides.pressedBackgroundColor,
       foregroundColor: foreground,
       hoverForegroundColor: foreground,
       pressedForegroundColor: foreground,
-      textStyle: textStyle,
+      textStyle: overrides.textStyle,
       decoration: radius == null
           ? null
           : ShadDecoration(
               border: ShadBorder(radius: radius),
               secondaryFocusedBorder: focusRing?.copyWith(
-                radius: radius + BorderRadius.circular(focusRing.offset ?? 0),
+                radius:
+                    radius.add(BorderRadius.circular(focusRing.offset ?? 0)),
               ),
             ),
       child: child ?? Text(effectiveLabel),
@@ -279,7 +208,7 @@ class ZamButton extends StatelessWidget {
     }
 
     // Without a label, ShadButton's own container node reads the child.
-    // The constructor asserts a label for disabled colors, because that node
+    // Disabled colors need a label (asserted above), because that node
     // would report enabled while ShadButton stays enabled to draw them.
     if (label == null) return button;
 
