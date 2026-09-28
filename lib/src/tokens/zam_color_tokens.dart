@@ -8,6 +8,7 @@ class ZamColorTokens {
     required this.light,
     required this.dark,
     required this.oled,
+    this.primaryForeground,
     this.black = ZamColorUtils.black,
     this.white = ZamColorUtils.white,
     this.transparent = ZamColorUtils.transparent,
@@ -68,6 +69,10 @@ class ZamColorTokens {
 
   /// Primary brand color.
   final Color primary;
+
+  /// Text and icon color on [primary]. Null picks black or white by
+  /// contrast.
+  final Color? primaryForeground;
 
   /// Light mode surface colors.
   final ZamSurfaceColors light;

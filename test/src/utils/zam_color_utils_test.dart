@@ -24,6 +24,19 @@ void main() {
       expect(lightContrast, ZamColorUtils.white);
     });
 
+    test('picks the foreground with the higher contrast', () {
+      // Hellas dark accent: black reaches 7.8:1, white only 2.7:1.
+      expect(
+        ZamColorUtils.readableOn(const Color(0xFF64A2E7)),
+        ZamColorUtils.black,
+      );
+      // Hellas light accent: white reaches 8.4:1.
+      expect(
+        ZamColorUtils.readableOn(const Color(0xFF004C98)),
+        ZamColorUtils.white,
+      );
+    });
+
     test('defines barrier color constant', () {
       expect(ZamColorUtils.barrier, const Color(0xCC000000));
     });
