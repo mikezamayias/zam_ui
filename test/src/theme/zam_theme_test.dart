@@ -69,6 +69,35 @@ void main() {
       expect(copy.insets.screen.left, 20);
       expect(copy.sizes.iconSm, copy.spacing.sixteen);
     });
+
+    test('explicit foregrounds override the computed ones', () {
+      final base = ZamColorTokens.fromSeed(primary: const Color(0xFF64A2E7));
+      final tokens = ZamColorTokens(
+        primary: base.primary,
+        primaryForeground: const Color(0xFF080B10),
+        light: base.light,
+        dark: ZamSurfaceColors(
+          background: base.dark.background,
+          foreground: base.dark.foreground,
+          card: base.dark.card,
+          muted: base.dark.muted,
+          mutedForeground: base.dark.mutedForeground,
+          border: base.dark.border,
+          input: base.dark.input,
+          destructive: const Color(0xFFF97066),
+          destructiveForeground: const Color(0xFF080B10),
+        ),
+        oled: base.oled,
+      );
+      final scheme = ZamThemeData(
+        colors: tokens,
+        typography: const ZamTypographyTokens(fontFamily: 'Test Sans'),
+        icons: testTheme.icons,
+      ).toShadThemeData(Brightness.dark).colorScheme;
+
+      expect(scheme.primaryForeground, const Color(0xFF080B10));
+      expect(scheme.destructiveForeground, const Color(0xFF080B10));
+    });
   });
 
   group('ZamTheme Context', () {

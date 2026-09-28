@@ -12,6 +12,7 @@ class ZamSurfaceColors {
     required this.border,
     required this.input,
     required this.destructive,
+    this.destructiveForeground,
   });
 
   /// Main background color.
@@ -37,4 +38,8 @@ class ZamSurfaceColors {
 
   /// Destructive action color.
   final Color destructive;
+
+  /// Text and icon color on [destructive]. Null picks black or white by
+  /// contrast.
+  final Color? destructiveForeground;
 }

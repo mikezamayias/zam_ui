@@ -14,9 +14,13 @@ abstract final class ZamColorUtils {
   /// Tokenized modal and sheet backdrop barrier overlay color (`0xCC000000`).
   static const barrier = Color(0xCC000000);
 
-  /// Returns either black or white based on luminance contrast against [color].
+  /// Returns black or white, whichever has the higher WCAG 2 contrast
+  /// ratio on [color].
   static Color readableOn(Color color) {
-    return color.computeLuminance() > 0.5 ? black : white;
+    final luminance = color.computeLuminance();
+    final onWhite = 1.05 / (luminance + 0.05);
+    final onBlack = (luminance + 0.05) / 0.05;
+    return onBlack >= onWhite ? black : white;
   }
 
   /// Linearly interpolates between [base] color and [overlay] by [amount].

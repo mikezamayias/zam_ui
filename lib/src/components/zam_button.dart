@@ -145,23 +145,34 @@ class ZamButton extends StatelessWidget {
       ZamButtonSize.large || ZamButtonSize.lg => ShadButtonSize.lg,
     };
 
+    final button = ShadButton.raw(
+      variant: shadVariant,
+      size: shadSize,
+      enabled: effectiveEnabled,
+      onPressed: effectiveEnabled ? onPressed : null,
+      leading: isLoading ? const _ZamLoadingDot() : leading,
+      trailing: trailing,
+      width: isExpanded ? double.infinity : width,
+      height: height ?? theme.sizes.buttonLargeHeight,
+      padding: padding,
+      gap: theme.spacing.eight,
+      child: child ?? Text(effectiveLabel),
+    );
+
+    // Without a label, ShadButton's own container node reads the child.
+    if (label == null) return button;
+
+    // With a label, this container replaces ShadButton's node, so a screen
+    // reader finds one stop and a disabled label never merges upward.
     return Semantics(
+      container: true,
       button: true,
+      enabled: effectiveEnabled,
+      focusable: effectiveEnabled,
       label: label,
       onTap: effectiveEnabled ? onPressed : null,
-      child: ShadButton.raw(
-        variant: shadVariant,
-        size: shadSize,
-        enabled: effectiveEnabled,
-        onPressed: effectiveEnabled ? onPressed : null,
-        leading: isLoading ? const _ZamLoadingDot() : leading,
-        trailing: trailing,
-        width: isExpanded ? double.infinity : width,
-        height: height ?? theme.sizes.buttonLargeHeight,
-        padding: padding,
-        gap: theme.spacing.eight,
-        child: child ?? Text(effectiveLabel),
-      ),
+      excludeSemantics: true,
+      child: button,
     );
   }
 }

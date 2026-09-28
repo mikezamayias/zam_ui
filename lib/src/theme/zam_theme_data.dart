@@ -103,13 +103,15 @@ class ZamThemeData {
   /// Converts design tokens into a [ShadThemeData] object for a given [brightness] and optional [isOled] mode.
   ShadThemeData toShadThemeData(Brightness brightness, {bool isOled = false}) {
     final tone = colors.forBrightness(brightness, isOled: isOled);
-    final primaryForeground = ZamColorUtils.readableOn(colors.primary);
+    final primaryForeground =
+        colors.primaryForeground ?? ZamColorUtils.readableOn(colors.primary);
     final secondary = ZamColorUtils.mix(
       colors.primary,
       brightness == Brightness.dark ? colors.black : colors.white,
       brightness == Brightness.dark ? 0.7 : 0.85,
     );
-    final destructiveForeground = ZamColorUtils.readableOn(tone.destructive);
+    final destructiveForeground = tone.destructiveForeground ??
+        ZamColorUtils.readableOn(tone.destructive);
 
     return ShadThemeData(
       brightness: brightness,
