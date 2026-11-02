@@ -12,11 +12,11 @@ management, and brand presets.
 
 ## Architecture
 
-`zam_ui` enforces a strict unidirectional dependency flow across modular layers. Higher layers depend only on lower layers, ensuring zero circular coupling:
+Dependencies flow one way: utils, then tokens, then theme, then components. Each layer imports only the layers before it.
 
 ```mermaid
 graph TD
-    App["Consumer App (Zam App)"] -->|imports| PublicAPI["package:zam_ui/zam_ui.dart"]
+    App["Your app"] -->|imports| PublicAPI["package:zam_ui/zam_ui.dart"]
     
     subgraph zam_ui ["zam_ui Package (lib/src/)"]
         PublicAPI --> Components["components/ (UI Primitives & Adapters)"]
@@ -28,13 +28,14 @@ graph TD
         Components --> Tokens
         Theme --> Tokens
         Theme --> Utils
+        Tokens --> Utils
     end
     
     Components -->|Wraps| Shad["shad package"]
     Theme -->|Themes| Shad
 ```
 
-- **Tokens (`lib/src/tokens/`)**: Pure configuration data contracts (`ZamColorTokens`, `ZamTypographyTokens`, `ZamSpacingTokens`, etc.) with zero widget dependencies.
+- **Tokens (`lib/src/tokens/`)**: Immutable design values (`ZamColorTokens`, `ZamTypographyTokens`, `ZamSpacingTokens`, etc.). They hold values and build no widgets.
 - **Theme (`lib/src/theme/`)**: Bridges design tokens to the widget tree (`ZamTheme`, `ZamThemeData`, `ZamPreset`) and adapts to `ShadThemeData`.
 - **Components (`lib/src/components/`)**: Visual UI primitives (`ZamButton`, `ZamSurface`, `ZamListTile`, `ZamFormField`, `ZamDialog`) built on shad. Use shad widgets such as `ShadCard` and `ShadInput` directly, and `ZamApp` themes them from your tokens.
 - **Utils (`lib/src/utils/`)**: Standalone mathematical color & geometry utilities (`ZamColorUtils`, `ZamOklchColor`).
@@ -59,10 +60,7 @@ dependencies:
       ref: v0.3.0
 ```
 
-This package is intentionally marked with `publish_to: "none"` so it cannot be
-published to public pub.dev by accident. To publish to a hosted private pub
-repository, replace `publish_to` with that private repository URL and run
-`dart pub publish` after configuring repository authentication.
+`zam_ui` is not on pub.dev. Install it from git with a version tag.
 
 ## Configure
 
@@ -171,24 +169,11 @@ ZamApp.router(
 );
 ```
 
-## Continuous integration policy
+## Continuous integration
 
-This public repository intentionally does not run automatic checks for pull requests.
-Its self-hosted workflow accepts only a manual dispatch of protected `main` and validates that default-branch commit, not pull-request code.
-Do not use a manual default-branch result as evidence that an open pull request was tested.
-
-Only the Captain initiates a run, and only after the intended repository changes have landed on protected `main`.
-The repository-scoped runner registration and default-branch protection are separate account prerequisites.
-The workflow has no inputs, persisted checkout credentials, secrets, deployment behavior, repository writes, cache publication, or artifact upload.
-
-The Captain's exact dispatch procedure is:
-
-1. Confirm the intended changes are already on protected `main` and that the separately registered runner has labels `self-hosted`, `macOS`, `ARM64`, and `zam-ui-manual`.
-2. In GitHub, open **Actions**, select **Manual self-hosted CI**, and choose **Run workflow**.
-3. Select `main` in the branch selector, leave the input-free form unchanged, and choose **Run workflow**.
-4. Confirm the run reports the expected `main` commit SHA and review every job result.
-
-The workflow rejects any other branch, unprotected default branch, non-default workflow source, or mismatched checkout before project commands run.
+CI runs by hand on a self-hosted runner, against protected `main` only.
+Pull requests are not tested automatically.
+The workflow has no secrets, writes nothing to the repository, and refuses any branch other than `main`.
 
 ## Verify
 
