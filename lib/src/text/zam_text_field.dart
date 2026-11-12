@@ -178,7 +178,11 @@ class ZamTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
 
   /// Hints for the platform's autofill service.
-  final Iterable<String> autofillHints;
+  ///
+  /// Null switches autofill off for this field, as with [EditableText]. An
+  /// empty list keeps the field in the platform's autofill context without
+  /// hints.
+  final Iterable<String>? autofillHints;
 
   /// Called with the new text after each change.
   final ValueChanged<String>? onChanged;
