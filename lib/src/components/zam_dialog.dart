@@ -34,9 +34,8 @@ class ZamDialog extends StatelessWidget {
     required String message,
     String confirmText = 'OK',
   }) {
-    return showShadDialog<void>(
+    return showZamDialog<void>(
       context: context,
-      barrierColor: ZamColorUtils.barrier,
       builder: (dialogContext) => ZamDialog(
         title: title,
         message: message,
@@ -61,10 +60,9 @@ class ZamDialog extends StatelessWidget {
     IconData? icon,
     bool destructive = false,
   }) async {
-    final result = await showShadDialog<bool>(
+    final result = await showZamDialog<bool>(
       context: context,
       barrierDismissible: false,
-      barrierColor: ZamColorUtils.barrier,
       builder: (dialogContext) => ZamDialog(
         title: title,
         message: message,
