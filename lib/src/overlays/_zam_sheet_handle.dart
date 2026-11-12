@@ -14,14 +14,20 @@ class _ZamSheetHandle extends StatelessWidget {
     final theme = context.zam;
     final palette = context.zamPalette;
 
-    return Semantics(
-      button: true,
-      label: label,
-      onTap: onDismiss,
-      excludeSemantics: true,
-      child: Center(
+    // The node covers the pill and a little room around it, not the whole
+    // row. `container` keeps it from merging into the drag detector's node.
+    return Center(
+      child: Semantics(
+        container: true,
+        button: true,
+        label: label,
+        onTap: onDismiss,
+        excludeSemantics: true,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: theme.spacing(3)),
+          padding: EdgeInsets.symmetric(
+            horizontal: theme.spacing(3),
+            vertical: theme.spacing(3),
+          ),
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: palette.mutedControl,

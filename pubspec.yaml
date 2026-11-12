@@ -1,6 +1,6 @@
 name: zam_ui
 description: A token and theme layer over shad, plus the components Zam apps share.
-version: 0.4.1
+version: 0.4.2
 publish_to: none
 repository: https://github.com/mikezamayias/zam_ui
 
