@@ -14,7 +14,9 @@ extension ZamThemeContext on BuildContext {
   /// Convenient getter for active [ZamIconSet].
   ZamIconSet get zamIcons => zam.icons;
 
+  /// Every color role for the active brightness.
+  ZamPalette get zamPalette => zam.palette(ShadTheme.of(this).brightness);
+
   /// Status colors for the active brightness, with readable foregrounds.
-  ZamStatusColors get zamStatus =>
-      zamColors.forBrightness(ShadTheme.of(this).brightness).status;
+  ZamStatusColors get zamStatus => zamPalette.status;
 }
