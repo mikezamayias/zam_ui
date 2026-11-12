@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:shad/shad.dart';
+import 'package:zam_ui/src/shell.dart';
 import 'package:zam_ui/src/tokens.dart';
 import 'package:zam_ui/src/utils.dart';
 

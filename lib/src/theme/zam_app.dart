@@ -43,7 +43,7 @@ class ZamApp extends StatelessWidget {
     this.restorationScopeId,
     this.backgroundColor,
     this.pageRouteBuilder,
-    this.scrollBehavior = const ShadScrollBehavior(),
+    this.scrollBehavior = const ZamScrollBehavior(),
   }) : routerConfig = null,
        _router = false;
 
@@ -71,7 +71,7 @@ class ZamApp extends StatelessWidget {
     this.actions,
     this.restorationScopeId,
     this.backgroundColor,
-    this.scrollBehavior = const ShadScrollBehavior(),
+    this.scrollBehavior = const ZamScrollBehavior(),
   }) : navigatorKey = null,
        onGenerateRoute = null,
        onGenerateInitialRoutes = null,
@@ -114,11 +114,14 @@ class ZamApp extends StatelessWidget {
 
   /// Builds the page route for [home], [routes] and named routes.
   ///
-  /// When null, pages use [ShadPageRoute], a fade with no back gesture.
+  /// When null, pages use [ZamPageRoute], which runs the platform's page
+  /// transition and the iOS back swipe.
   /// Always null for [ZamApp.router].
   final PageRouteFactory? pageRouteBuilder;
 
   /// How scrollables below the app scroll and which scrollbar they draw.
+  ///
+  /// Defaults to [ZamScrollBehavior].
   final ScrollBehavior scrollBehavior;
 
   /// List of navigator observers.
@@ -265,7 +268,7 @@ class ZamApp extends StatelessWidget {
             pageRouteBuilder:
                 pageRouteBuilder ??
                 <T>(settings, builder) =>
-                    ShadPageRoute<T>(settings: settings, builder: builder),
+                    ZamPageRoute<T>(settings: settings, builder: builder),
             scrollBehavior: scrollBehavior,
             builder: scopedBuilder,
             title: title,
