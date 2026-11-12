@@ -133,7 +133,7 @@ void main() {
   });
 
   group('ZamApp routes', () {
-    testWidgets('pages use ShadPageRoute by default', (tester) async {
+    testWidgets('pages use ZamPageRoute by default', (tester) async {
       late ModalRoute<Object?>? route;
       await tester.pumpWidget(
         ZamApp(
@@ -142,7 +142,7 @@ void main() {
         ),
       );
 
-      expect(route, isA<ShadPageRoute<void>>());
+      expect(route, isA<ZamPageRoute<void>>());
     });
 
     testWidgets('pageRouteBuilder builds every page', (tester) async {
@@ -174,7 +174,7 @@ void main() {
   });
 
   group('ZamApp scrolling and navigation notifications', () {
-    testWidgets('uses ShadScrollBehavior by default', (tester) async {
+    testWidgets('uses ZamScrollBehavior by default', (tester) async {
       late ScrollBehavior behavior;
       await tester.pumpWidget(
         ZamApp(
@@ -183,7 +183,7 @@ void main() {
         ),
       );
 
-      expect(behavior, isA<ShadScrollBehavior>());
+      expect(behavior, isA<ZamScrollBehavior>());
     });
 
     testWidgets('passes scrollBehavior to the app', (tester) async {
