@@ -85,7 +85,7 @@ dependencies:
   zam_ui:
     git:
       url: https://github.com/mikezamayias/zam_ui.git
-      ref: v0.4.1
+      ref: v0.4.2
 ```
 
 `zam_ui` is not on pub.dev. Install it from git with a version tag.

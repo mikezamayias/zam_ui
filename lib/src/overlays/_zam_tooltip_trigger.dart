@@ -79,6 +79,7 @@ class _ZamTooltipTriggerState extends State<_ZamTooltipTrigger> {
       builder: (context) => Text(widget.message),
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
+        excludeFromSemantics: widget.excludeFromSemantics,
         onLongPress: _showForTouch,
         child: widget.child,
       ),

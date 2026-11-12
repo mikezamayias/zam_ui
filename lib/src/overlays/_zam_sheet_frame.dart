@@ -198,9 +198,12 @@ class _ZamSheetFrameState extends State<_ZamSheetFrame> {
       ),
     );
 
+    // Dragging has no screen reader meaning, and its scroll actions would merge
+    // into the handle's node, so the detector stays out of semantics.
     if (widget.enableDrag) {
       surface = side._isVertical
           ? GestureDetector(
+              excludeFromSemantics: true,
               onVerticalDragStart: _onDragStart,
               onVerticalDragUpdate: _onDragUpdate,
               onVerticalDragEnd: _onDragEnd,
@@ -208,6 +211,7 @@ class _ZamSheetFrameState extends State<_ZamSheetFrame> {
               child: surface,
             )
           : GestureDetector(
+              excludeFromSemantics: true,
               onHorizontalDragStart: _onDragStart,
               onHorizontalDragUpdate: _onDragUpdate,
               onHorizontalDragEnd: _onDragEnd,

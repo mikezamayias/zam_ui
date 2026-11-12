@@ -280,6 +280,57 @@ void main() {
       semantics.dispose();
     });
 
+    testWidgets('adds nothing to the ancestor semantics when excluded', (
+      tester,
+    ) async {
+      final semantics = tester.ensureSemantics();
+      await tester.pumpApp(
+        Center(
+          child: Semantics(
+            key: _trigger,
+            container: true,
+            label: 'Settings',
+            button: true,
+            child: const ZamTooltip(
+              message: _message,
+              excludeFromSemantics: true,
+              child: SizedBox(width: 48, height: 48),
+            ),
+          ),
+        ),
+      );
+
+      final data = tester.getSemantics(find.byKey(_trigger)).getSemanticsData();
+      expect(data.hasAction(SemanticsAction.longPress), isFalse);
+      expect(data.tooltip, isEmpty);
+      semantics.dispose();
+    });
+
+    testWidgets('still adds the long press action to the ancestor', (
+      tester,
+    ) async {
+      final semantics = tester.ensureSemantics();
+      await tester.pumpApp(
+        Center(
+          child: Semantics(
+            key: _trigger,
+            container: true,
+            label: 'Settings',
+            button: true,
+            child: const ZamTooltip(
+              message: _message,
+              child: SizedBox(width: 48, height: 48),
+            ),
+          ),
+        ),
+      );
+
+      final data = tester.getSemantics(find.byKey(_trigger)).getSemanticsData();
+      expect(data.hasAction(SemanticsAction.longPress), isTrue);
+      expect(data.tooltip, _message);
+      semantics.dispose();
+    });
+
     testWidgets('gives screen readers a long press action to open it', (
       tester,
     ) async {

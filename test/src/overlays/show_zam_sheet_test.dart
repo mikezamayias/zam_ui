@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -772,6 +773,35 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(completed, isTrue);
+      semantics.dispose();
+    });
+
+    testWidgets('keeps the handle a small node that only taps', (
+      tester,
+    ) async {
+      _useLogicalPixels(tester);
+      final semantics = tester.ensureSemantics();
+      await _open<void>(
+        tester,
+        showDragHandle: true,
+        builder: (_) => ListView(children: [_box(height: 2000)]),
+      );
+
+      // The drag detector's scroll actions must not merge into the handle,
+      // so the focus rectangle of a screen reader stays on the pill.
+      final handle = buttonsLabeled('Dismiss').evaluate().single;
+      expect(handle.rect.width, lessThanOrEqualTo(64));
+      expect(handle.rect.height, lessThanOrEqualTo(44));
+      expect(handle.rect.width, greaterThanOrEqualTo(32));
+      expect(handle.rect.height, greaterThanOrEqualTo(28));
+      expect(handle.getSemanticsData().actions, SemanticsAction.tap.index);
+
+      // Only the scrollable content scrolls, and it is not the handle.
+      final scrollers = find.semantics.byPredicate(
+        (node) => node.getSemanticsData().hasAction(SemanticsAction.scrollUp),
+      );
+      expect(scrollers, findsOneWidget);
+      expect(scrollers.evaluate().single.label, isNot('Dismiss'));
       semantics.dispose();
     });
 
