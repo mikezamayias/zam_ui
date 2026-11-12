@@ -19,7 +19,6 @@ library;
 
 // ZamMaterial is deprecated on arrival so apps see every remaining use until
 // 0.5.0 removes it.
-// ignore_for_file: remove_deprecations_in_breaking_versions
 
 import 'package:flutter/widgets.dart';
 import 'package:shad/material.dart';

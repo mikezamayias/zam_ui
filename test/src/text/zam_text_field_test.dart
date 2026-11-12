@@ -32,6 +32,40 @@ Future<TextEditingController> _pumpWithText(
 }
 
 void main() {
+  group('autofill', () {
+    EditableTextState editable(WidgetTester tester) =>
+        tester.state<EditableTextState>(find.byType(EditableText));
+
+    testWidgets('null hints switch autofill off', (tester) async {
+      await pumpField(tester, const ZamTextField(autofillHints: null));
+
+      final config = editable(tester).textInputConfiguration;
+      expect(config.autofillConfiguration.enabled, isFalse);
+    });
+
+    testWidgets('the default keeps the field in the autofill context', (
+      tester,
+    ) async {
+      await pumpField(tester, const ZamTextField());
+
+      final config = editable(tester).textInputConfiguration;
+      expect(config.autofillConfiguration.enabled, isTrue);
+      expect(config.autofillConfiguration.autofillHints, isEmpty);
+    });
+
+    testWidgets('passes the given hints to the platform', (tester) async {
+      await pumpField(
+        tester,
+        const ZamTextField(autofillHints: [AutofillHints.email]),
+      );
+
+      final config = editable(tester).textInputConfiguration;
+      expect(config.autofillConfiguration.autofillHints, [
+        AutofillHints.email,
+      ]);
+    });
+  });
+
   group('typing', () {
     testWidgets('updates the controller and reports changes and submit', (
       tester,

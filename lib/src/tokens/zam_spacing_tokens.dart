@@ -2,7 +2,6 @@ part of '../tokens.dart';
 
 // The numeric names stay for one release as deprecated getters, which is
 // deliberate even in a breaking version, so apps can migrate one call at a time.
-// ignore_for_file: remove_deprecations_in_breaking_versions
 
 /// Spacing scale, the same scale as shad's [ShadSpacing].
 ///
