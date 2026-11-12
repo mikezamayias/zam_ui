@@ -53,8 +53,8 @@ class ZamScreenHeader extends StatelessWidget {
                 button: true,
                 label: backLabel,
                 onTap: onBack,
-                child: _ZamPressable(
-                  onTap: onBack!,
+                child: ZamPressable(
+                  onTap: onBack,
                   radius: theme.radius.md,
                   child: ConstrainedBox(
                     constraints: theme.sizes.minTapTargetConstraints,

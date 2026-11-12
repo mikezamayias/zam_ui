@@ -71,8 +71,8 @@ class ZamSurface extends StatelessWidget {
       button: true,
       label: semanticLabel,
       onTap: onTap,
-      child: _ZamPressable(
-        onTap: onTap!,
+      child: ZamPressable(
+        onTap: onTap,
         radius: radius ?? theme.radius.xl,
         child: surface,
       ),
@@ -80,89 +80,5 @@ class ZamSurface extends StatelessWidget {
     return margin == null
         ? pressable
         : Padding(padding: margin!, child: pressable);
-  }
-}
-
-/// Keyboard-focusable, hoverable pressable with an overlay and a focus ring.
-class _ZamPressable extends StatefulWidget {
-  const _ZamPressable({
-    required this.onTap,
-    required this.radius,
-    required this.child,
-  });
-
-  final VoidCallback onTap;
-  final BorderRadiusGeometry radius;
-  final Widget child;
-
-  @override
-  State<_ZamPressable> createState() => _ZamPressableState();
-}
-
-class _ZamPressableState extends State<_ZamPressable> {
-  bool _hovered = false;
-  bool _pressed = false;
-  bool _focused = false;
-
-  void _set(VoidCallback update) => setState(update);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.zam;
-    final scheme = ShadTheme.of(context).colorScheme;
-    final overlay = _pressed
-        ? theme.opacities.apply(scheme.foreground, theme.opacities.pressed)
-        : _hovered
-        ? theme.opacities.apply(scheme.foreground, theme.opacities.whisper)
-        : theme.colors.transparent;
-
-    return FocusableActionDetector(
-      onShowFocusHighlight: (value) => _set(() => _focused = value),
-      // Web maps Enter to ButtonActivateIntent and Space to ActivateIntent.
-      actions: {
-        ActivateIntent: CallbackAction<ActivateIntent>(
-          onInvoke: (_) {
-            widget.onTap();
-            return null;
-          },
-        ),
-        ButtonActivateIntent: CallbackAction<ButtonActivateIntent>(
-          onInvoke: (_) {
-            widget.onTap();
-            return null;
-          },
-        ),
-      },
-      // Hover is tracked here, not through the detector's hover highlight,
-      // because that one only fires in keyboard-driven highlight mode.
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => _set(() => _hovered = true),
-        onExit: (_) => _set(() => _hovered = false),
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: widget.onTap,
-          onTapDown: (_) => _set(() => _pressed = true),
-          onTapUp: (_) => _set(() => _pressed = false),
-          onTapCancel: () => _set(() => _pressed = false),
-          child: DecoratedBox(
-            position: DecorationPosition.foreground,
-            decoration: BoxDecoration(
-              color: overlay,
-              borderRadius: widget.radius,
-              border: _focused
-                  ? Border.fromBorderSide(
-                      BorderSide(
-                        color: scheme.ring,
-                        width: theme.strokes.focusRing,
-                      ),
-                    )
-                  : null,
-            ),
-            child: widget.child,
-          ),
-        ),
-      ),
-    );
   }
 }
