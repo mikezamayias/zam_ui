@@ -5,11 +5,11 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "**/*.config.dart"
+    - build/**
 
 linter:
   rules:
     public_member_api_docs: true
-    one_member_abstracts: false
     lines_longer_than_80_chars: false
     comment_references: false
     sort_pub_dependencies: false

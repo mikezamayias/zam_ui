@@ -1,6 +1,15 @@
 part of '../theme.dart';
 
 /// Top-level app wrapper configuring [ZamTheme] and underlying [ShadApp].
+///
+/// It builds a widgets-layer app: no Material theme, no Material
+/// localizations and no Material page route. Apps that still use Material
+/// widgets wrap them in `ZamMaterial` from `package:zam_ui/material.dart`.
+///
+/// Below the [ShadApp] it scopes the [ZamThemeData] for the active
+/// brightness and a [DefaultTextStyle] with the theme's font family, font
+/// family fallback and foreground color, so unstyled [Text] uses the app
+/// font rather than the platform font.
 class ZamApp extends StatelessWidget {
   /// Creates a standard [ZamApp] with imperative navigation.
   const ZamApp({
@@ -12,6 +21,7 @@ class ZamApp extends StatelessWidget {
     this.onGenerateRoute,
     this.onGenerateInitialRoutes,
     this.onUnknownRoute,
+    this.onNavigationNotification,
     this.navigatorObservers = const <NavigatorObserver>[],
     this.initialRoute,
     this.home,
@@ -32,6 +42,8 @@ class ZamApp extends StatelessWidget {
     this.actions,
     this.restorationScopeId,
     this.backgroundColor,
+    this.pageRouteBuilder,
+    this.scrollBehavior = const ShadScrollBehavior(),
   }) : routerConfig = null,
        _router = false;
 
@@ -43,6 +55,7 @@ class ZamApp extends StatelessWidget {
     this.themeMode,
     this.routerConfig,
     this.builder,
+    this.onNavigationNotification,
     this.title = '',
     this.onGenerateTitle,
     this.color,
@@ -58,6 +71,7 @@ class ZamApp extends StatelessWidget {
     this.actions,
     this.restorationScopeId,
     this.backgroundColor,
+    this.scrollBehavior = const ShadScrollBehavior(),
   }) : navigatorKey = null,
        onGenerateRoute = null,
        onGenerateInitialRoutes = null,
@@ -66,6 +80,7 @@ class ZamApp extends StatelessWidget {
        initialRoute = null,
        home = null,
        routes = null,
+       pageRouteBuilder = null,
        _router = true;
 
   /// Light mode design system theme configuration.
@@ -75,7 +90,9 @@ class ZamApp extends StatelessWidget {
   final ZamThemeData? darkTheme;
 
   /// Explicit theme mode (system, light, or dark).
-  final ThemeMode? themeMode;
+  ///
+  /// When null, the app follows the platform brightness.
+  final ZamThemeMode? themeMode;
 
   /// Global navigator key.
   final GlobalKey<NavigatorState>? navigatorKey;
@@ -88,6 +105,21 @@ class ZamApp extends StatelessWidget {
 
   /// Unknown route fallback handler.
   final RouteFactory? onUnknownRoute;
+
+  /// Called for each [NavigationNotification] that bubbles up to the app.
+  ///
+  /// See [WidgetsApp.onNavigationNotification].
+  final NotificationListenerCallback<NavigationNotification>?
+  onNavigationNotification;
+
+  /// Builds the page route for [home], [routes] and named routes.
+  ///
+  /// When null, pages use [ShadPageRoute], a fade with no back gesture.
+  /// Always null for [ZamApp.router].
+  final PageRouteFactory? pageRouteBuilder;
+
+  /// How scrollables below the app scroll and which scrollbar they draw.
+  final ScrollBehavior scrollBehavior;
 
   /// List of navigator observers.
   final List<NavigatorObserver>? navigatorObservers;
@@ -163,13 +195,20 @@ class ZamApp extends StatelessWidget {
 
     // ShadApp resolves the theme mode above its builder, so the builder reads
     // the active brightness and scopes the matching ZamThemeData, which also
-    // covers the toaster and sonner that ShadApp places inside it. ShadMaterial
-    // keeps Material widgets working below ZamApp.
+    // covers the toaster and sonner that ShadApp places inside it.
     Widget scopedBuilder(BuildContext context, Widget? child) {
-      final isDark = ShadTheme.of(context).brightness == Brightness.dark;
+      final shadTheme = ShadTheme.of(context);
+      final isDark = shadTheme.brightness == Brightness.dark;
       return ZamTheme(
         data: isDark ? effectiveDarkTheme : effectiveTheme,
-        child: ShadMaterial(
+        // ShadApp sets only the text color, so without this an unstyled Text
+        // would use the platform font.
+        child: DefaultTextStyle.merge(
+          style: TextStyle(
+            fontFamily: shadTheme.textTheme.family,
+            fontFamilyFallback: shadTheme.textTheme.p.fontFamilyFallback,
+            color: shadTheme.colorScheme.foreground,
+          ),
           child: Builder(
             builder: (context) =>
                 builder?.call(context, child) ??
@@ -182,9 +221,9 @@ class ZamApp extends StatelessWidget {
 
     final shadThemeMode = switch (themeMode) {
       null => null,
-      ThemeMode.system => ShadThemeMode.system,
-      ThemeMode.light => ShadThemeMode.light,
-      ThemeMode.dark => ShadThemeMode.dark,
+      ZamThemeMode.system => ShadThemeMode.system,
+      ZamThemeMode.light => ShadThemeMode.light,
+      ZamThemeMode.dark => ShadThemeMode.dark,
     };
 
     final app = _router
@@ -208,6 +247,8 @@ class ZamApp extends StatelessWidget {
             theme: lightData,
             darkTheme: darkData,
             routerConfig: routerConfig,
+            onNavigationNotification: onNavigationNotification,
+            scrollBehavior: scrollBehavior,
             builder: scopedBuilder,
           )
         : ShadApp(
@@ -215,13 +256,17 @@ class ZamApp extends StatelessWidget {
             onGenerateRoute: onGenerateRoute,
             onGenerateInitialRoutes: onGenerateInitialRoutes,
             onUnknownRoute: onUnknownRoute,
+            onNavigationNotification: onNavigationNotification,
             navigatorObservers:
                 navigatorObservers ?? const <NavigatorObserver>[],
             initialRoute: initialRoute,
             home: home,
             routes: routes ?? const <String, WidgetBuilder>{},
-            pageRouteBuilder: <T>(settings, builder) =>
-                MaterialPageRoute<T>(settings: settings, builder: builder),
+            pageRouteBuilder:
+                pageRouteBuilder ??
+                <T>(settings, builder) =>
+                    ShadPageRoute<T>(settings: settings, builder: builder),
+            scrollBehavior: scrollBehavior,
             builder: scopedBuilder,
             title: title,
             onGenerateTitle: onGenerateTitle,

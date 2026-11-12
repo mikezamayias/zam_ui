@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart' show TextField, ThemeMode;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shad/shad.dart';
 import 'package:zam_ui/zam_ui.dart';
+
 import '../../helpers/helpers.dart';
 
 void main() {
@@ -52,7 +52,7 @@ void main() {
       await tester.pumpWidget(
         ZamApp(
           theme: testTheme,
-          themeMode: ThemeMode.dark,
+          themeMode: ZamThemeMode.dark,
           home: Builder(
             builder: (context) {
               status = context.zamStatus;
@@ -198,19 +198,6 @@ void main() {
       expect(shadTheme.theme!.colorScheme.primary, testTheme.colors.primary);
     });
 
-    testWidgets('ZamApp keeps Material widgets working', (tester) async {
-      await tester.pumpWidget(
-        ZamApp(
-          theme: testTheme,
-          home: const Center(child: TextField()),
-        ),
-      );
-
-      await tester.enterText(find.byType(TextField), 'Material');
-      expect(tester.takeException(), isNull);
-      expect(find.text('Material'), findsOneWidget);
-    });
-
     testWidgets('ZamApp scopes the dark ZamThemeData in dark mode', (
       tester,
     ) async {
@@ -223,7 +210,7 @@ void main() {
         ZamApp(
           theme: testTheme,
           darkTheme: darkTheme,
-          themeMode: ThemeMode.dark,
+          themeMode: ZamThemeMode.dark,
           builder: (context, child) {
             builderFamily = context.zamTypography.fontFamily;
             return child!;

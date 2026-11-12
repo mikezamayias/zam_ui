@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shad/shad.dart';
 import 'package:zam_ui/zam_ui.dart';
 
 const _testIcons = ZamIconSet(
@@ -22,12 +21,10 @@ extension PumpApp on WidgetTester {
   Future<void> pumpApp(Widget widget, {ZamThemeData? theme}) async {
     final effectiveTheme = theme ?? testTheme;
     return pumpWidget(
-      ZamTheme(
-        data: effectiveTheme,
-        child: ShadApp(
-          theme: effectiveTheme.toShadThemeData(Brightness.light),
-          home: widget,
-        ),
+      ZamApp(
+        theme: effectiveTheme,
+        themeMode: ZamThemeMode.light,
+        home: widget,
       ),
     );
   }
