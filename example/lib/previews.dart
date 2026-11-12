@@ -3,14 +3,14 @@
 
 import 'package:flutter/widget_previews.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shad/shad.dart';
 import 'package:zam_ui/zam_ui.dart';
 import 'package:zam_ui_example/presets.dart';
 
 Widget _themed(Widget child) {
-  return ZamTheme(
-    data: wellnessPreset.light,
-    child: ShadApp(home: Center(child: child)),
+  return ZamApp(
+    theme: wellnessPreset.light,
+    darkTheme: wellnessPreset.dark,
+    home: ZamScaffold(body: Center(child: child)),
   );
 }
 
@@ -51,7 +51,7 @@ Widget linkButtonPreview() => _themed(
 @Preview(name: 'Icon Button', group: 'Buttons')
 Widget iconButtonPreview() => _themed(
   ZamIconButton(
-    icon: const Icon(LucideIcons.plus),
+    icon: const Icon(infoIcon),
     semanticLabel: 'Add',
     onPressed: () {},
   ),
@@ -100,7 +100,7 @@ Widget filterPillUnselectedPreview() =>
 @Preview(name: 'Empty State', group: 'Feedback')
 Widget emptyStatePreview() => _themed(
   const ZamEmptyState(
-    icon: LucideIcons.inbox,
+    icon: infoIcon,
     title: 'No items',
     message: 'There are no items to display.',
   ),
@@ -142,7 +142,7 @@ Widget listTilePreview() => _themed(
   const ZamListTile(
     title: 'Account Settings',
     subtitle: 'Manage your preferences',
-    leading: Icon(LucideIcons.settings),
+    leading: Icon(infoIcon),
   ),
 );
 
@@ -151,7 +151,7 @@ Widget listTileTappablePreview() => _themed(
   ZamListTile(
     title: 'Notifications',
     subtitle: 'Push and email alerts',
-    leading: const Icon(LucideIcons.bell),
+    leading: const Icon(warningIcon),
     semanticLabel: 'Notifications',
     onTap: () {},
   ),
@@ -164,14 +164,14 @@ Widget listTileDividerPreview() => _themed(
     children: [
       ZamListTile(
         title: 'Privacy',
-        leading: const Icon(LucideIcons.shield),
+        leading: const Icon(successIcon),
         showDivider: true,
         semanticLabel: 'Privacy',
         onTap: () {},
       ),
       ZamListTile(
         title: 'Security',
-        leading: const Icon(LucideIcons.lock),
+        leading: const Icon(errorIcon),
         semanticLabel: 'Security',
         onTap: () {},
       ),
@@ -188,7 +188,7 @@ Widget formFieldPreview() => _themed(
     child: const ZamFormField(
       label: 'Email',
       description: 'We will never share your email.',
-      child: ShadInput(),
+      child: ZamTextField(),
     ),
   ),
 );
@@ -200,7 +200,7 @@ Widget formFieldRequiredPreview() => _themed(
     child: const ZamFormField(
       label: 'Password',
       isRequired: true,
-      child: ShadInput(),
+      child: ZamTextField(),
     ),
   ),
 );
@@ -213,7 +213,7 @@ Widget formFieldErrorPreview() => _themed(
       label: 'Email',
       isRequired: true,
       error: 'Please enter a valid email address.',
-      child: ShadInput(),
+      child: ZamTextField(),
     ),
   ),
 );

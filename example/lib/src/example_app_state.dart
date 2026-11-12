@@ -2,6 +2,7 @@ part of '../main.dart';
 
 class _ExampleAppState extends State<ExampleApp> {
   ZamPreset _preset = wellnessPreset;
+  ZamThemeMode _themeMode = ZamThemeMode.system;
 
   void _togglePreset() {
     setState(() {
@@ -9,19 +10,25 @@ class _ExampleAppState extends State<ExampleApp> {
     });
   }
 
+  void _cycleThemeMode() {
+    setState(() {
+      const modes = ZamThemeMode.values;
+      _themeMode = modes[(_themeMode.index + 1) % modes.length];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = _preset.light;
-
-    return ZamTheme(
-      data: theme,
-      child: ShadApp(
-        theme: theme.toShadThemeData(Brightness.light),
-        darkTheme: theme.toShadThemeData(Brightness.dark),
-        home: ExampleHome(
-          presetName: _preset.name,
-          onTogglePreset: _togglePreset,
-        ),
+    return ZamApp(
+      title: 'zam_ui example',
+      theme: _preset.light,
+      darkTheme: _preset.dark,
+      themeMode: _themeMode,
+      home: ExampleHome(
+        presetName: _preset.name,
+        themeMode: _themeMode,
+        onTogglePreset: _togglePreset,
+        onCycleThemeMode: _cycleThemeMode,
       ),
     );
   }

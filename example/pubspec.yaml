@@ -3,15 +3,14 @@ description: Example app for zam_ui presets.
 publish_to: "none"
 
 environment:
-  sdk: ">=3.11.0 <4.0.0"
-  flutter: ">=3.41.0"
+  sdk: ">=3.14.0 <4.0.0"
+  flutter: ">=3.50.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  shad: ">=1.0.2 <1.1.0"
   zam_ui:
     path: ..
 
-flutter:
-  uses-material-design: true
+dev_dependencies:
+  very_good_analysis: ^10.0.0

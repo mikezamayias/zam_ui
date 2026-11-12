@@ -1,23 +1,26 @@
 import 'package:flutter/widgets.dart';
 import 'package:zam_ui/zam_ui.dart';
 
+// The example ships no icon font, so the icons are text glyphs. An app would
+// use its own icon package here.
+
 /// Info icon data.
-const infoIcon = IconData(0xe88e, fontFamily: 'MaterialIcons');
+const infoIcon = IconData(0x2139);
 
 /// Success icon data.
-const successIcon = IconData(0xe876, fontFamily: 'MaterialIcons');
+const successIcon = IconData(0x2713);
 
 /// Warning icon data.
-const warningIcon = IconData(0xe002, fontFamily: 'MaterialIcons');
+const warningIcon = IconData(0x26A0);
 
 /// Error icon data.
-const errorIcon = IconData(0xe000, fontFamily: 'MaterialIcons');
+const errorIcon = IconData(0x2715);
 
 /// Back icon data.
-const backIcon = IconData(0xe5c4, fontFamily: 'MaterialIcons');
+const backIcon = IconData(0x2039);
 
 /// Chevron right icon data.
-const chevronRightIcon = IconData(0xe5cc, fontFamily: 'MaterialIcons');
+const chevronRightIcon = IconData(0x203A);
 
 /// Example icon set mapping.
 const exampleIcons = ZamIconSet(
