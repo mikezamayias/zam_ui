@@ -29,7 +29,7 @@ class ZamFilterPill extends StatelessWidget {
       selected: selected,
       label: label,
       onTap: onTap,
-      child: _ZamPressable(
+      child: ZamPressable(
         onTap: onTap,
         radius: theme.radius.pill,
         child: ConstrainedBox(

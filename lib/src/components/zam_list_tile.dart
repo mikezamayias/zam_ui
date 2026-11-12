@@ -109,8 +109,8 @@ class ZamListTile extends StatelessWidget {
             button: true,
             label: semanticLabel,
             onTap: onTap,
-            child: _ZamPressable(
-              onTap: onTap!,
+            child: ZamPressable(
+              onTap: onTap,
               radius: theme.radius.zero,
               child: content,
             ),
