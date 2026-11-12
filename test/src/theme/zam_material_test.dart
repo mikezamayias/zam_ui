@@ -116,5 +116,35 @@ void main() {
         'Fallback Sans',
       ]);
     });
+
+    testWidgets('takes the fallback from the typography tokens', (
+      tester,
+    ) async {
+      late ThemeData theme;
+      await tester.pumpWidget(
+        ZamApp(
+          theme: testTheme.copyWith(
+            typography: const ZamTypographyTokens(
+              fontFamily: 'Test Sans',
+              fontFamilyFallback: ['Fallback Sans'],
+            ),
+          ),
+          themeMode: ZamThemeMode.light,
+          home: ZamMaterial(
+            child: Builder(
+              builder: (context) {
+                theme = Theme.of(context);
+                return const SizedBox();
+              },
+            ),
+          ),
+        ),
+      );
+
+      expect(theme.textTheme.bodyLarge!.fontFamilyFallback, ['Fallback Sans']);
+      expect(theme.primaryTextTheme.bodyLarge!.fontFamilyFallback, [
+        'Fallback Sans',
+      ]);
+    });
   });
 }
