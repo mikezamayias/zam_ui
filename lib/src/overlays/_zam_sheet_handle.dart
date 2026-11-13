@@ -16,6 +16,8 @@ class _ZamSheetHandle extends StatelessWidget {
 
     // The node covers the pill and a little room around it, not the whole
     // row. `container` keeps it from merging into the drag detector's node.
+    // It is at least Android's 48px target, which also meets iOS's 44px.
+    final target = theme.sizes.androidMinTapTarget;
     return Center(
       child: Semantics(
         container: true,
@@ -23,19 +25,23 @@ class _ZamSheetHandle extends StatelessWidget {
         label: label,
         onTap: onDismiss,
         excludeSemantics: true,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: theme.spacing(3),
-            vertical: theme.spacing(3),
-          ),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: palette.mutedControl,
-              borderRadius: theme.radius.pill,
-            ),
-            child: SizedBox(
-              width: theme.spacing(8),
-              height: theme.spacing.xs,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minWidth: target, minHeight: target),
+          child: Center(
+            widthFactor: 1,
+            heightFactor: 1,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: theme.spacing(3)),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: palette.mutedControl,
+                  borderRadius: theme.radius.pill,
+                ),
+                child: SizedBox(
+                  width: theme.spacing(8),
+                  height: theme.spacing.xs,
+                ),
+              ),
             ),
           ),
         ),

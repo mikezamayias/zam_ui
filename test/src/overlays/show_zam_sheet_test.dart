@@ -746,8 +746,8 @@ void main() {
       await _open<void>(tester, showDragHandle: true);
       final palette = tester.element(find.byKey(_content)).zamPalette;
 
-      // The handle is a 4 high pill with 12 above and below it.
-      expect(tester.getSize(_surface).height, 200 + 28);
+      // The handle is a 4 high pill centred in a 48 high touch target.
+      expect(tester.getSize(_surface).height, 200 + 48);
       expect(tester.getRect(find.byKey(_content)).bottom, 600);
       final pill = find.byWidgetPredicate(
         (widget) =>
@@ -789,12 +789,15 @@ void main() {
 
       // The drag detector's scroll actions must not merge into the handle,
       // so the focus rectangle of a screen reader stays on the pill.
+      // It is still at least a full touch target on both platforms.
       final handle = buttonsLabeled('Dismiss').evaluate().single;
       expect(handle.rect.width, lessThanOrEqualTo(64));
-      expect(handle.rect.height, lessThanOrEqualTo(44));
-      expect(handle.rect.width, greaterThanOrEqualTo(32));
-      expect(handle.rect.height, greaterThanOrEqualTo(28));
+      expect(handle.rect.height, lessThanOrEqualTo(56));
+      expect(handle.rect.width, greaterThanOrEqualTo(48));
+      expect(handle.rect.height, greaterThanOrEqualTo(48));
       expect(handle.getSemanticsData().actions, SemanticsAction.tap.index);
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
       // Only the scrollable content scrolls, and it is not the handle.
       final scrollers = find.semantics.byPredicate(
