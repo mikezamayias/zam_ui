@@ -27,6 +27,11 @@ class ZamSizeTokens {
   /// minimum. It stays fixed when the spacing step changes.
   double get minTapTarget => 44;
 
+  /// Android's minimum touch target dimension (48px), for controls that
+  /// must meet both platforms' guidelines. It stays fixed when the spacing
+  /// step changes.
+  double get androidMinTapTarget => 48;
+
   /// Small button height, kept at [minTapTarget].
   double get buttonSmallHeight => minTapTarget;
 
