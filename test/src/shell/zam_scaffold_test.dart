@@ -218,6 +218,26 @@ void main() {
       expect(tester.getRect(find.byKey(_barKey)).bottom, screen.bottom);
       expect(bodyMedia.viewInsets.bottom, 300);
     });
+    testWidgets('treats a negative keyboard inset as no keyboard', (
+      tester,
+    ) async {
+      // iOS can report a bottom inset just below zero for a frame while the
+      // keyboard closes.
+      await tester.pumpApp(
+        Builder(
+          builder: (context) => MediaQuery(
+            data: MediaQuery.of(
+              context,
+            ).copyWith(viewInsets: const EdgeInsets.only(bottom: -24)),
+            child: ZamScaffold(body: probeBody(), bottomBar: sizedBar()),
+          ),
+        ),
+      );
+
+      expect(tester.takeException(), isNull);
+      final screen = tester.getRect(find.byType(ZamScaffold));
+      expect(tester.getRect(find.byKey(_barKey)).bottom, screen.bottom);
+    });
   });
 
   group('ZamScaffold status bar tap', () {

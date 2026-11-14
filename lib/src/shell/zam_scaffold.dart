@@ -52,8 +52,10 @@ class ZamScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
+    // The inset can dip below zero for a frame while the iOS keyboard
+    // closes, and padding must not be negative.
     final keyboardInset = resizeToAvoidBottomInset
-        ? media.viewInsets.bottom
+        ? math.max<double>(0, media.viewInsets.bottom)
         : 0.0;
     final contentMedia = resizeToAvoidBottomInset
         ? media.removeViewInsets(removeBottom: true)
