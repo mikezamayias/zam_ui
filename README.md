@@ -132,7 +132,7 @@ All of these come from `package:zam_ui/zam_ui.dart`.
 | Shell | `ZamScaffold`, `ZamPageRoute`, `ZamPageTransition`, `ZamScrollBehavior`, `ZamScrollbar` |
 | Text | `ZamTextField`, `ZamTextSelectionControls`, `ZamSelectionArea` |
 | Overlays | `showZamDialog`, `ZamDialogSurface`, `showZamSheet`, `ZamSheetSide`, `ZamToast` (`show`, `showCustom`, `hide`), `ZamToaster`, `ZamTooltip` |
-| Controls | `ZamPressable`, `ZamSpinner`, `ZamProgress`, `ZamCheckbox`, `ZamReorderableList`, `ZamReorderLabels` |
+| Controls | `ZamPressable`, `ZamSpinner`, `ZamProgress`, `ZamCheckbox`, `ZamSelect`, `ZamSelectOption`, `ZamReorderableList`, `ZamReorderLabels` |
 | Palette and roles | `ZamPalette`, `context.zamPalette`, `ZamThemeData.palette`, `ZamThemeData.oled`, the optional roles of `ZamSurfaceColors`, `ZamTypographyTokens.fontFamilyFallback` |
 
 - **Shell**: `ZamScaffold` fills its box, places an optional bottom bar and handles the keyboard inset.
@@ -144,6 +144,7 @@ All of these come from `package:zam_ui/zam_ui.dart`.
   `ZamToaster` restores the toaster for a subtree that replaces the `ZamApp` builder child.
 - **Controls**: `ZamReorderableList` takes its screen reader wording from `ZamReorderLabels`, because it relies on no localization delegate.
   `ZamPressable` has no semantics label or role, so callers add their own.
+  `ZamSelect` picks one `ZamSelectOption` from a list that opens below the field, and its `value` stays the source of truth.
 - **Palette and roles**: `ZamPalette` resolves every role to a non-null color for one brightness.
   The optional `ZamSurfaceColors` roles resolve to the values `ZamApp` computed in 0.3.0 when left null, so an app that sets none sees no change.
 
