@@ -227,6 +227,50 @@ ZamApp.router(
 );
 ```
 
+### App tokens
+
+Tokens that `zam_ui` does not model, such as a brand accent or a set of category colors, go in a `ZamThemeExtension`.
+Each `ZamThemeData` carries its own instances, so the light and dark themes hold their own values and widgets read the ones for the active brightness.
+
+```dart
+class BrandTokens extends ZamThemeExtension<BrandTokens> {
+  const BrandTokens({required this.gold});
+
+  final Color gold;
+
+  @override
+  BrandTokens copyWith({Color? gold}) => BrandTokens(gold: gold ?? this.gold);
+
+  @override
+  BrandTokens lerp(BrandTokens? other, double t) {
+    if (other == null) return this;
+    return BrandTokens(gold: Color.lerp(gold, other.gold, t)!);
+  }
+
+  @override
+  bool operator ==(Object other) => other is BrandTokens && other.gold == gold;
+
+  @override
+  int get hashCode => gold.hashCode;
+}
+
+ZamApp.router(
+  theme: preset.light.copyWith(
+    extensions: const [BrandTokens(gold: Color(0xFFB8860B))],
+  ),
+  darkTheme: preset.dark.copyWith(
+    extensions: const [BrandTokens(gold: Color(0xFFFFD700))],
+  ),
+  routerConfig: router,
+);
+
+final gold = context.zamExtension<BrandTokens>()?.gold;
+```
+
+`ZamThemeData(extensions: ...)` takes at most one extension per type, and `copyWith(extensions: ...)` replaces the whole set.
+`ZamThemeData.extension<T>()` and `context.zamExtension<T>()` return null when the theme has no extension of that type.
+Override `==` and `hashCode` so a theme with equal tokens counts as unchanged.
+
 ## Upgrading from 0.3.0
 
 Breaking changes:

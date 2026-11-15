@@ -17,8 +17,11 @@ class ZamThemeData {
     this.shadows = const ZamShadowTokens(),
     this.motion = const ZamMotionTokens(),
     this.oled = false,
+    Iterable<ZamThemeExtension<dynamic>> extensions =
+        const <ZamThemeExtension<dynamic>>[],
   }) : insets = ZamInsetsTokens(spacing),
        sizes = ZamSizeTokens(spacing),
+       extensions = _extensionsByType(extensions),
        assert(
          typography.fontFamily.isNotEmpty,
          'fontFamily must not be empty.',
@@ -79,6 +82,33 @@ class ZamThemeData {
   /// Whether dark mode uses the pure black [ZamColorTokens.oled] surfaces
   /// instead of [ZamColorTokens.dark].
   final bool oled;
+
+  /// App-owned tokens, keyed by each extension's [ZamThemeExtension.type].
+  ///
+  /// The map is unmodifiable. Read one with [extension] or
+  /// `context.zamExtension`.
+  final Map<Object, ZamThemeExtension<dynamic>> extensions;
+
+  /// The extension of type [T], or null when this theme has none.
+  T? extension<T>() => extensions[T] as T?;
+
+  static Map<Object, ZamThemeExtension<dynamic>> _extensionsByType(
+    Iterable<ZamThemeExtension<dynamic>> extensions,
+  ) {
+    final byType = <Object, ZamThemeExtension<dynamic>>{};
+    for (final entry in extensions) {
+      assert(
+        !byType.containsKey(entry.type),
+        'ZamThemeData got two extensions of type ${entry.type}.',
+      );
+      // The front end reads ZamThemeExtension<dynamic> in a map literal as
+      // ZamThemeExtension<ZamThemeExtension<dynamic>>, so the value needs the
+      // same cast Material's ThemeData uses.
+      byType[entry.type] =
+          entry as ZamThemeExtension<ZamThemeExtension<dynamic>>;
+    }
+    return Map.unmodifiable(byType);
+  }
 
   late final ZamPalette _lightPalette = _resolvePalette(
     Brightness.light,
@@ -159,6 +189,9 @@ class ZamThemeData {
   }
 
   /// Creates a copy of this theme configuration with optional overridden fields.
+  ///
+  /// [extensions] replaces the whole set of extensions. When null, the copy
+  /// keeps this theme's extensions.
   ZamThemeData copyWith({
     ZamColorTokens? colors,
     ZamTypographyTokens? typography,
@@ -170,6 +203,7 @@ class ZamThemeData {
     ZamShadowTokens? shadows,
     ZamMotionTokens? motion,
     bool? oled,
+    Iterable<ZamThemeExtension<dynamic>>? extensions,
   }) {
     return ZamThemeData(
       colors: colors ?? this.colors,
@@ -182,6 +216,7 @@ class ZamThemeData {
       shadows: shadows ?? this.shadows,
       motion: motion ?? this.motion,
       oled: oled ?? this.oled,
+      extensions: extensions ?? this.extensions.values,
     );
   }
 
@@ -198,7 +233,8 @@ class ZamThemeData {
           other.opacities == opacities &&
           other.shadows == shadows &&
           other.motion == motion &&
-          other.oled == oled;
+          other.oled == oled &&
+          mapEquals(other.extensions, extensions);
 
   @override
   int get hashCode => Object.hash(
@@ -212,6 +248,7 @@ class ZamThemeData {
     shadows,
     motion,
     oled,
+    Object.hashAllUnordered(extensions.values),
   );
 
   /// Converts design tokens into a [ShadThemeData] object for a given

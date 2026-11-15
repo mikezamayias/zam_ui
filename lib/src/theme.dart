@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show mapEquals;
 import 'package:flutter/widgets.dart';
 import 'package:shad/shad.dart';
 import 'package:zam_ui/src/shell.dart';
@@ -9,6 +10,7 @@ part 'theme/zam_theme_mode.dart';
 part 'theme/zam_toast_variant.dart';
 part 'theme/zam_toast_style.dart';
 part 'theme/zam_theme_data.dart';
+part 'theme/zam_theme_extension.dart';
 part 'theme/zam_theme.dart';
 part 'theme/zam_theme_context.dart';
 part 'theme/zam_preset.dart';
