@@ -12,6 +12,7 @@ class ExampleControls extends StatefulWidget {
 class _ExampleControlsState extends State<ExampleControls> {
   final _items = <String>['Color', 'Type', 'Motion', 'Spacing'];
   bool _checked = true;
+  String? _group;
   int _taps = 0;
 
   void _reorder(int oldIndex, int newIndex) {
@@ -47,6 +48,21 @@ class _ExampleControlsState extends State<ExampleControls> {
                   maxLines: 6,
                   style: TextStyle(color: palette.foreground),
                 ),
+              ),
+            ),
+            SizedBox(height: theme.spacing.md),
+            ZamFormField(
+              label: 'Group',
+              child: ZamSelect<String>(
+                options: const [
+                  ZamSelectOption(value: 'design', label: 'Design'),
+                  ZamSelectOption(value: 'engineering', label: 'Engineering'),
+                  ZamSelectOption(value: 'research', label: 'Research'),
+                ],
+                value: _group,
+                placeholder: 'Pick a group',
+                semanticLabel: 'Group',
+                onChanged: (value) => setState(() => _group = value),
               ),
             ),
             SizedBox(height: theme.spacing.md),
