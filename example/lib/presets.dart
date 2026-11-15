@@ -22,6 +22,12 @@ const backIcon = IconData(0x2039);
 /// Chevron right icon data.
 const chevronRightIcon = IconData(0x203A);
 
+/// Search icon data.
+const searchIcon = IconData(0x2315);
+
+/// Clear icon data.
+const clearIcon = IconData(0x2715);
+
 /// Example icon set mapping.
 const exampleIcons = ZamIconSet(
   info: infoIcon,
@@ -30,6 +36,8 @@ const exampleIcons = ZamIconSet(
   error: errorIcon,
   back: backIcon,
   chevronRight: chevronRightIcon,
+  search: searchIcon,
+  clear: clearIcon,
 );
 
 /// Wellness brand preset implementation.

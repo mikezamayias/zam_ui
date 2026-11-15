@@ -39,6 +39,8 @@ class ZamThemeData {
         error: IconData(0xe000, fontFamily: 'MaterialIcons'),
         back: IconData(0xe5c4, fontFamily: 'MaterialIcons'),
         chevronRight: IconData(0xe5cc, fontFamily: 'MaterialIcons'),
+        search: IconData(0xe8b6, fontFamily: 'MaterialIcons'),
+        clear: IconData(0xe5cd, fontFamily: 'MaterialIcons'),
       ),
     );
   }

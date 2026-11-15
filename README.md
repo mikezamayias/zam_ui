@@ -130,7 +130,7 @@ All of these come from `package:zam_ui/zam_ui.dart`.
 | Library | Widgets and functions |
 | --- | --- |
 | Shell | `ZamScaffold`, `ZamPageRoute`, `ZamPageTransition`, `ZamScrollBehavior`, `ZamScrollbar` |
-| Text | `ZamTextField`, `ZamTextSelectionControls`, `ZamSelectionArea` |
+| Text | `ZamTextField`, `ZamSearchField`, `ZamTextSelectionControls`, `ZamSelectionArea` |
 | Overlays | `showZamDialog`, `ZamDialogSurface`, `showZamSheet`, `ZamSheetSide`, `ZamToast` (`show`, `showCustom`, `hide`), `ZamToaster`, `ZamTooltip` |
 | Controls | `ZamPressable`, `ZamSpinner`, `ZamProgress`, `ZamCheckbox`, `ZamReorderableList`, `ZamReorderLabels` |
 | Palette and roles | `ZamPalette`, `context.zamPalette`, `ZamThemeData.palette`, `ZamThemeData.oled`, the optional roles of `ZamSurfaceColors`, `ZamTypographyTokens.fontFamilyFallback` |
@@ -139,6 +139,8 @@ All of these come from `package:zam_ui/zam_ui.dart`.
   `ZamPageRoute` slides in on iOS and macOS with an edge swipe back, and fades in elsewhere.
 - **Text**: `ZamTextField` is unstyled, so the app draws the box around it.
   It keeps selection handles, a magnifier and the platform edit menu on touch devices.
+  `ZamSearchField` is the styled search box on top of it, with a leading search icon, a clear button and a focus ring.
+  It takes its icons from the optional `search` and `clear` roles of `ZamIconSet`, and draws a plain cross when `clear` is null.
 - **Overlays**: `showZamDialog` fades in without blur by default, and `showZamSheet` builds the sheet frame itself, so the builder returns content only.
   `ZamToast.showCustom` shows any widget without the kit's padding, border or background.
   `ZamToaster` restores the toaster for a subtree that replaces the `ZamApp` builder child.

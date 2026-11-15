@@ -36,6 +36,12 @@ class _ExampleControlsState extends State<ExampleControls> {
               onBack: () => Navigator.of(context).pop(),
             ),
             SizedBox(height: theme.spacing.md),
+            const ZamSearchField(
+              semanticsLabel: 'Search',
+              clearSemanticsLabel: 'Clear search',
+              placeholderText: 'Search tokens',
+            ),
+            SizedBox(height: theme.spacing.md),
             ZamFormField(
               label: 'Note',
               description:
