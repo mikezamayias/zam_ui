@@ -11,6 +11,11 @@ extension ZamThemeContext on BuildContext {
   /// Convenient getter for active [ZamTypographyTokens].
   ZamTypographyTokens get zamTypography => zam.typography;
 
+  /// The active theme's extension of type [T], or null when it has none.
+  ///
+  /// See [ZamThemeData.extension].
+  T? zamExtension<T>() => zam.extension<T>();
+
   /// Convenient getter for active [ZamIconSet].
   ZamIconSet get zamIcons => zam.icons;
 
