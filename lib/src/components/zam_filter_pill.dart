@@ -42,16 +42,22 @@ class ZamFilterPill extends StatelessWidget {
                 theme.strokes.border(scheme.border),
               ),
             ),
-            child: Padding(
-              padding: theme.insets.symmetric(
-                horizontal: theme.spacing(3),
-                vertical: theme.spacing(1.5),
-              ),
-              child: Text(
-                label,
-                style: theme.typography.label(
-                  context,
-                  color: scheme.foreground,
+            // The factors keep the pill at its content size above the
+            // minimum, and centre the label in the room the minimum adds.
+            child: Center(
+              widthFactor: 1,
+              heightFactor: 1,
+              child: Padding(
+                padding: theme.insets.symmetric(
+                  horizontal: theme.spacing(3),
+                  vertical: theme.spacing(1.5),
+                ),
+                child: Text(
+                  label,
+                  style: theme.typography.label(
+                    context,
+                    color: scheme.foreground,
+                  ),
                 ),
               ),
             ),
