@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shad/shad.dart';
+import 'package:zam_ui/src/controls.dart';
 import 'package:zam_ui/src/theme.dart';
 import 'package:zam_ui/src/tokens.dart';
 
@@ -18,3 +19,5 @@ part 'text/_zam_text_magnifier.dart';
 part 'text/_zam_text_magnifier_state.dart';
 part 'text/_zam_text_menus.dart';
 part 'text/zam_selection_area.dart';
+part 'text/zam_search_field.dart';
+part 'text/_zam_search_field_state.dart';

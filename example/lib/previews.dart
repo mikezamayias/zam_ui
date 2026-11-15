@@ -179,6 +179,20 @@ Widget listTileDividerPreview() => _themed(
   ),
 );
 
+// -- Search --
+
+@Preview(name: 'Search Field', group: 'Inputs')
+Widget searchFieldPreview() => _themed(
+  Padding(
+    padding: wellnessPreset.light.insets.card,
+    child: const ZamSearchField(
+      semanticsLabel: 'Search',
+      clearSemanticsLabel: 'Clear search',
+      placeholderText: 'Search tokens',
+    ),
+  ),
+);
+
 // -- Form Fields --
 
 @Preview(name: 'Form Field', group: 'Inputs')

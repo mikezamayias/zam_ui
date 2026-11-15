@@ -9,6 +9,8 @@ const _testIcons = ZamIconSet(
   error: IconData(0xe000, fontFamily: 'TestIcons'),
   back: IconData(0xe5c4, fontFamily: 'TestIcons'),
   chevronRight: IconData(0xe5cc, fontFamily: 'TestIcons'),
+  search: IconData(0xe8b6, fontFamily: 'TestIcons'),
+  clear: IconData(0xe5cd, fontFamily: 'TestIcons'),
 );
 
 final testTheme = ZamThemeData(
